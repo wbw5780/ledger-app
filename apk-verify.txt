@@ -263,3 +263,13 @@ Lcom/ledger/app/util/UpdateChecker; -> found
 <testsuite name="com.ledger.app.PdfTableParserTest" tests="7" skipped="0" failures="0" errors="0"
 <testsuite name="com.ledger.app.UpdateCheckerTest" tests="6" skipped="0" failures="0" errors="0"
 
+===== GitHub Releases 发布核验（匿名，不带 token）=====
+tag_name=7 name=v1.6 draft=False prerelease=False
+body=盈亏曲线图重做：平滑曲线、清爽刻度、手指按住可查任意日期数值
+asset=ledger.apk size=11133090 content_type=application/vnd.android.package-archive
+url=https://github.com/wbw5780/ledger-app/releases/download/7/ledger.apk
+首跳 HTTP/2 302 
+完整下载：最终 HTTP 200，重定向 1 次
+下载字节 11133090，本地 ledger.apk 11133090
+SHA-256 一致：b30cb3bb5c631502aebcde4a5522872cfaa0c520ac6bcc5be883253838ab1433
+tag 7 指向：e5d1a61
