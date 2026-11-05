@@ -51,6 +51,7 @@ object LedgerIcons {
         "M9,7V5a1,1 0,0 1,1 -1h4a1,1 0,0 1,1 1v2",
     )
     val Edit = line("edit", "M12.5,20h7.5", "M16.2,3.8a2.1,2.1 0,0 1,3 3L7.5,18.5L3.5,19.5l1,-4z")
+    val Download = line("download", "M12,3.5v11", "M7.5,10.5l4.5,4.5l4.5,-4.5", "M4.5,15.5v2.5a2,2 0,0 0,2 2h11a2,2 0,0 0,2 -2v-2.5")
     val Import = line("import", "M12,4v11", "M7,10.5l5,5l5,-5", "M5,20h14")
     val Close = line("close", "M6,6L18,18", "M18,6L6,18")
     val Search = line("search", "M11,4a7,7 0,1 1,0 14a7,7 0,1 1,0 -14z", "M20,20l-3.8,-3.8")

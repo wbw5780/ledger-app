@@ -13,8 +13,8 @@ android {
         applicationId = "com.ledger.app"
         minSdk = 26
         targetSdk = 35
-        versionCode = 3
-        versionName = "1.2"
+        versionCode = 4
+        versionName = "1.3"
     }
 
     // 签名 keystore 只保存在构建服务器上，不入公开仓库；克隆的源码没有它时 release 不签名
@@ -96,6 +96,8 @@ dependencies {
     implementation("com.tom-roush:pdfbox-android:2.0.27.0")
 
     testImplementation("junit:junit:4.13.2")
+    // 仅单元测试：android.jar 里的 org.json 是桩实现，测试 UpdateChecker.parseRelease 需真实实现（App 运行时用系统自带 org.json）
+    testImplementation("org.json:json:20240303")
     // 仅单元测试：用桌面版 PDFBox 生成/提取真实 PDF，验证 PDF 解析链路（不进 APK）
     testImplementation("org.apache.pdfbox:pdfbox:2.0.27")
     pdfboxAar("com.tom-roush:pdfbox-android:2.0.27.0@aar")

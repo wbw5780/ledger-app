@@ -290,6 +290,7 @@ private fun MeTab(projects: List<Project>, recordCount: Int, nav: Navigator, qui
                 Spacer(Modifier.height(12.dp))
                 GuideStep(3, "收到的 PDF / CSV 传到手机，在项目页「导入账单」")
             }
+            UpdateEntryCard(version)
             Text(
                 "账本 v$version",
                 style = MaterialTheme.typography.bodySmall,
@@ -319,7 +320,7 @@ private fun BrandCard(projectCount: Int, recordCount: Int) {
                 Spacer(Modifier.width(12.dp))
                 Text("账本", color = Color.White, style = MaterialTheme.typography.titleLarge, modifier = Modifier.weight(1f))
                 Box(Modifier.clip(CircleShape).background(Brand.Gold).padding(horizontal = 10.dp, vertical = 3.dp)) {
-                    Text("离线", color = Color(0xFF3A2A00), fontSize = 12.sp, fontWeight = FontWeight.Bold)
+                    Text("本地", color = Color(0xFF3A2A00), fontSize = 12.sp, fontWeight = FontWeight.Bold)
                 }
             }
             Spacer(Modifier.height(20.dp))

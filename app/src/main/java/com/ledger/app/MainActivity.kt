@@ -22,6 +22,15 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.toArgb
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.runtime.CompositionLocalProvider
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.ui.platform.LocalContext
+import androidx.lifecycle.compose.LifecycleResumeEffect
+import com.ledger.app.ui.LocalUpdater
+import com.ledger.app.ui.UpdateController
+import com.ledger.app.ui.UpdateDialogs
+import kotlinx.coroutines.delay
 import androidx.compose.ui.Modifier
 import com.ledger.app.data.AppDatabase
 import com.ledger.app.ui.ImportPreviewScreen
@@ -47,6 +56,20 @@ class MainActivity : ComponentActivity() {
         val db = AppDatabase.get(this)
         setContent {
             LedgerTheme {
+                val scope = rememberCoroutineScope()
+                val updater = remember { UpdateController(applicationContext, scope) }
+                val activityCtx = LocalContext.current
+                // 进入主界面后延迟 2s 静默检查一次，仅当有新版才弹窗；失败无声
+                LaunchedEffect(Unit) {
+                    delay(2_000)
+                    updater.startupCheck()
+                }
+                // 从「安装未知应用」设置页返回后重试安装
+                LifecycleResumeEffect(updater) {
+                    updater.onResume(activityCtx)
+                    onPauseOrDispose { }
+                }
+                CompositionLocalProvider(LocalUpdater provides updater) {
                 Surface(Modifier.fillMaxSize(), color = MaterialTheme.colorScheme.background) {
                     val stack = remember { mutableStateListOf<Screen>(Screen.Home) }
                     val nav = remember { Navigator(stack) }
@@ -68,6 +91,8 @@ class MainActivity : ComponentActivity() {
                             is Screen.ImportPreview -> ImportPreviewScreen(db, nav, screen)
                         }
                     }
+                    UpdateDialogs(updater)
+                }
                 }
             }
         }
