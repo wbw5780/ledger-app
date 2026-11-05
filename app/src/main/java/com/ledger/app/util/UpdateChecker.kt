@@ -40,7 +40,7 @@ class IncompleteDownloadException(msg: String) : IOException(msg)
 object UpdateChecker {
     const val REPO_API_LATEST = "https://api.github.com/repos/wbw5780/ledger-app/releases/latest"
     const val ASSET_NAME = "ledger.apk"
-    const val APK_MIME = "application/vnd.android-package-archive"
+    const val APK_MIME = "application/vnd.android.package-archive"
     private const val TIMEOUT_MS = 10_000
     private const val MAX_REDIRECTS = 5
 

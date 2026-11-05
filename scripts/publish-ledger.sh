@@ -36,7 +36,7 @@ json() { python3 -I -c "import json,sys; d=json.load(open(sys.argv[1])); print($
 BADGING="$("$AAPT" dump badging "$APK" | grep -m1 '^package:')"
 VC="$(sed -E "s/.*versionCode='([0-9]+)'.*/\1/" <<<"$BADGING")"
 VN="$(sed -E "s/.*versionName='([^']+)'.*/\1/" <<<"$BADGING")"
-PKG="$(sed -E "s/.*name='([^']+)'.*/\1/" <<<"$BADGING")"
+PKG="$(sed -E "s/^package: name='([^']+)'.*/\1/" <<<"$BADGING")"
 SIZE="$(stat -c %s "$APK")"
 [[ "$VC" =~ ^[0-9]+$ ]] || die "无法读取 versionCode"
 echo "APK：$PKG  versionCode=$VC  versionName=$VN  size=$SIZE"
@@ -71,7 +71,7 @@ echo "已创建 release id=$REL_ID  tag=$VC  name=v$VN"
 
 # 4. 上传资产 ledger.apk
 code="$(gh -o "$TMP/asset.json" -w '%{http_code}' -X POST \
-    -H "Content-Type: application/vnd.android-package-archive" \
+    -H "Content-Type: application/vnd.android.package-archive" \
     --data-binary @"$APK" "$UPLOAD_URL?name=ledger.apk")"
 [ "$code" = "201" ] || { cat "$TMP/asset.json" >&2; die "上传资产失败 HTTP $code"; }
 echo "已上传 ledger.apk（$(json "$TMP/asset.json" 'd["size"]') 字节）"

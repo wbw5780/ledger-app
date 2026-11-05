@@ -14,7 +14,7 @@ class UpdateCheckerTest {
          "assets":[$assets]}
     """.trimIndent()
 
-    private val apkAsset = """{"name":"ledger.apk","size":11223344,"content_type":"application/vnd.android-package-archive",
+    private val apkAsset = """{"name":"ledger.apk","size":11223344,"content_type":"application/vnd.android.package-archive",
         "browser_download_url":"https://github.com/wbw5780/ledger-app/releases/download/4/ledger.apk"}"""
     private val otherAsset = """{"name":"ledger-debug.apk","size":99,"browser_download_url":"https://example.com/x.apk"}"""
 
@@ -55,5 +55,7 @@ class UpdateCheckerTest {
     @Test fun constants() {
         assertEquals("https://api.github.com/repos/wbw5780/ledger-app/releases/latest", UpdateChecker.REPO_API_LATEST)
         assertEquals("ledger.apk", UpdateChecker.ASSET_NAME)
+        // 系统安装器 intent-filter 匹配的 MIME（注意是点号 android.package，不是连字符）
+        assertEquals("application/vnd.android.package-archive", UpdateChecker.APK_MIME)
     }
 }
