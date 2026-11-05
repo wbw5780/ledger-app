@@ -57,7 +57,7 @@ import com.ledger.app.data.RecordType
 import com.ledger.app.util.Dates
 import com.ledger.app.util.IconStore
 import com.ledger.app.util.Money
-import com.ledger.app.util.Series
+import com.ledger.app.util.ChartMath
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
@@ -82,7 +82,7 @@ fun ProjectDetailScreen(db: AppDatabase, nav: Navigator, projectId: Long) {
     val scope = rememberCoroutineScope()
     val project by remember(projectId) { db.projectDao().observe(projectId) }.collectAsState(initial = null)
     val records by remember(projectId) { db.recordDao().observeByProject(projectId) }.collectAsState(initial = emptyList())
-    val series = remember(records) { Series.cumulative(records) }
+    val series = remember(records) { ChartMath.chartPoints(records) }
     val income = remember(records) { records.filter { it.type == RecordType.INCOME }.sumOf { it.amountCents } }
     val expense = remember(records) { records.filter { it.type == RecordType.EXPENSE }.sumOf { it.amountCents } }
     // 按月倒序分组（records 已按时间倒序）
@@ -153,7 +153,7 @@ fun ProjectDetailScreen(db: AppDatabase, nav: Navigator, projectId: Long) {
                         )
                     }
                 }
-                item { HeroProfitCard("本项目盈亏", income - expense, series) }
+                item { HeroProfitCard("本项目盈亏", income - expense, series, chartHeight = ChartHeightDetail) }
                 item {
                     Row(
                         horizontalArrangement = Arrangement.spacedBy(CardGap),

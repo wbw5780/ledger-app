@@ -1,5 +1,5 @@
-===== ledger-debug.apk (14205563 bytes) =====
-package: name='com.ledger.app' versionCode='6' versionName='1.5' platformBuildVersionName='15' platformBuildVersionCode='35' compileSdkVersion='35' compileSdkVersionCodename='15'
+===== ledger-debug.apk (14508032 bytes) =====
+package: name='com.ledger.app' versionCode='7' versionName='1.6' platformBuildVersionName='15' platformBuildVersionCode='35' compileSdkVersion='35' compileSdkVersionCodename='15'
 sdkVersion:'26'
 targetSdkVersion:'35'
 uses-permission: name='android.permission.INTERNET'
@@ -113,9 +113,8 @@ supports-any-density: 'true'
 locales: '--_--' 'af' 'am' 'ar' 'as' 'az' 'be' 'bg' 'bn' 'bs' 'ca' 'cs' 'da' 'de' 'el' 'en-AU' 'en-CA' 'en-GB' 'en-IN' 'en-XC' 'es' 'es-US' 'et' 'eu' 'fa' 'fi' 'fr' 'fr-CA' 'gl' 'gu' 'hi' 'hr' 'hu' 'hy' 'in' 'is' 'it' 'iw' 'ja' 'ka' 'kk' 'km' 'kn' 'ko' 'ky' 'lo' 'lt' 'lv' 'mk' 'ml' 'mn' 'mr' 'ms' 'my' 'nb' 'ne' 'nl' 'or' 'pa' 'pl' 'pt' 'pt-BR' 'pt-PT' 'ro' 'ru' 'si' 'sk' 'sl' 'sq' 'sr' 'sr-Latn' 'sv' 'sw' 'ta' 'te' 'th' 'tl' 'tr' 'uk' 'ur' 'uz' 'vi' 'zh-CN' 'zh-HK' 'zh-TW' 'zu'
 densities: '120' '160' '240' '320' '480' '640' '65534'
 native-code: 'arm64-v8a' 'armeabi-v7a' 'x86' 'x86_64'
-
-===== ledger.apk (11116706 bytes) =====
-package: name='com.ledger.app' versionCode='6' versionName='1.5' platformBuildVersionName='15' platformBuildVersionCode='35' compileSdkVersion='35' compileSdkVersionCodename='15'
+===== ledger.apk (11133090 bytes) =====
+package: name='com.ledger.app' versionCode='7' versionName='1.6' platformBuildVersionName='15' platformBuildVersionCode='35' compileSdkVersion='35' compileSdkVersionCodename='15'
 sdkVersion:'26'
 targetSdkVersion:'35'
 uses-permission: name='android.permission.INTERNET'
@@ -228,7 +227,6 @@ supports-any-density: 'true'
 locales: '--_--' 'af' 'am' 'ar' 'as' 'az' 'be' 'bg' 'bn' 'bs' 'ca' 'cs' 'da' 'de' 'el' 'en-AU' 'en-CA' 'en-GB' 'en-IN' 'en-XC' 'es' 'es-US' 'et' 'eu' 'fa' 'fi' 'fr' 'fr-CA' 'gl' 'gu' 'hi' 'hr' 'hu' 'hy' 'in' 'is' 'it' 'iw' 'ja' 'ka' 'kk' 'km' 'kn' 'ko' 'ky' 'lo' 'lt' 'lv' 'mk' 'ml' 'mn' 'mr' 'ms' 'my' 'nb' 'ne' 'nl' 'or' 'pa' 'pl' 'pt' 'pt-BR' 'pt-PT' 'ro' 'ru' 'si' 'sk' 'sl' 'sq' 'sr' 'sr-Latn' 'sv' 'sw' 'ta' 'te' 'th' 'tl' 'tr' 'uk' 'ur' 'uz' 'vi' 'zh-CN' 'zh-HK' 'zh-TW' 'zu'
 densities: '120' '160' '240' '320' '480' '640' '65534'
 native-code: 'arm64-v8a' 'armeabi-v7a' 'x86' 'x86_64'
-
 ===== apksigner verify ledger.apk =====
 Verified using v1 scheme (JAR signing): false
 Verified using v2 scheme (APK Signature Scheme v2): true
@@ -239,46 +237,29 @@ Verified for SourceStamp: false
 Signer #1 certificate DN: CN=Ledger, OU=Personal, O=Ledger, L=Local, C=CN
 Signer #1 certificate SHA-256 digest: df55d71cc8021a9aae6c11f04a7a961141f2ff341b41c6929b1a25bb8ad8fbbe
 
-===== 第六轮核验：微信 PDF 电子凭证按坐标分列解析（v1.5 / versionCode 6）=====
+===== 第七轮核验：盈亏曲线图重做（v1.6 / versionCode 7）=====
 --- 版本 ---
-package: name='com.ledger.app' versionCode='6' versionName='1.5' platformBuildVersionName='15' platformBuildVersionCode='35' compileSdkVersion='35' compileSdkVersionCodename='15'
-SHA-256 ledger.apk: fc64fe8876fb3e8e9f34d7069446a3c76e0452f4df9d673f21ba8cac7ee11200
+package: name='com.ledger.app' versionCode='7' versionName='1.6' platformBuildVersionName='15' platformBuildVersionCode='35' compileSdkVersion='35' compileSdkVersionCodename='15'
+SHA-256 ledger.apk: b30cb3bb5c631502aebcde4a5522872cfaa0c520ac6bcc5be883253838ab1433
 --- dex 中的关键类 ---
+Lcom/ledger/app/util/MonotoneSpline; -> found
+Lcom/ledger/app/util/ChartMath; -> found
+Lcom/ledger/app/ui/ChartKt; -> found
+Lcom/ledger/app/util/Series; -> found
 Lcom/ledger/app/csv/PdfTableParser; -> found
-Lcom/ledger/app/csv/PdfWord; -> found
-Lcom/ledger/app/csv/PdfTextExtractor$WordStripper; -> found
-Lcom/ledger/app/csv/PdfBillParser; -> found
-Lcom/ledger/app/csv/BillImporter; -> found
 Lcom/ledger/app/csv/BillParser; -> found
-Lcom/tom_roush/pdfbox/text/PDFTextStripper; -> found
-Lcom/tom_roush/pdfbox/text/TextPosition; -> found
 Lcom/ledger/app/util/UpdateChecker; -> found
---- dex 字符串（新提示语）---
-无法识别的账单格式 -> 1
-收/付款说明 -> 1
-收支类型 -> 1
-交易单号 -> 1
---- 真实样本不在 APK / git 中（应无输出）---
+--- 解析/数据代码本轮零改动（git diff 84b17ce 统计，应无输出）---
 （无）
---- 真实样本解析核对（详见本地 pdf-parse-check.txt，含真实数据故不入仓库）---
-pdftotext 笔数=28  本解析器笔数=28
-结论：28/28 全部一致
+--- 真实样本回归（本地 pdf-parse-check.txt，本轮测试重新生成）---
+# 共 28 笔，跳过 0
+--- 图表配色对比度（WCAG，对卡片底色）---
+浅色：曲线 18.9:1，刻度 #8A8A8A 3.5:1，红端点 3.9:1，chip 反色文字 18.9:1
+深色：曲线 16.4:1，刻度 #8A8A8A 5.2:1，红端点 6.3:1，chip 反色文字 16.4:1
 --- 单元测试结果（app/build/test-results/testDebugUnitTest）---
 <testsuite name="com.ledger.app.BillParserTest" tests="7" skipped="0" failures="0" errors="0"
+<testsuite name="com.ledger.app.ChartMathTest" tests="3" skipped="0" failures="0" errors="0"
+<testsuite name="com.ledger.app.PdfBillParserTest" tests="9" skipped="0" failures="0" errors="0"
 <testsuite name="com.ledger.app.PdfTableParserTest" tests="7" skipped="0" failures="0" errors="0"
 <testsuite name="com.ledger.app.UpdateCheckerTest" tests="6" skipped="0" failures="0" errors="0"
-<testsuite name="com.ledger.app.PdfBillParserTest" tests="9" skipped="0" failures="0" errors="0"
 
-
-===== GitHub Releases 发布核验（匿名，不带 token）=====
-tag_name=6 name=v1.5 draft=False prerelease=False
-body=修复微信PDF账单（交易电子凭证）识别错误
-asset=ledger.apk size=11116706 content_type=application/vnd.android.package-archive
-url=https://github.com/wbw5780/ledger-app/releases/download/6/ledger.apk
-首跳 HTTP/2 302 
-完整下载：最终 HTTP 200，重定向 1 次
-下载字节 11116706，本地 ledger.apk 11116706
-SHA-256 一致：fc64fe8876fb3e8e9f34d7069446a3c76e0452f4df9d673f21ba8cac7ee11200
-tag 6 指向：001cd01
-远端 main 树中 sample-wechat.pdf：HTTP 404
-旧提交 cf16ac7 中该文件（GitHub 缓存）：HTTP 200

@@ -52,7 +52,7 @@ import com.ledger.app.data.Project
 import com.ledger.app.data.ProjectSummary
 import com.ledger.app.data.Record
 import com.ledger.app.util.Dates
-import com.ledger.app.util.Series
+import com.ledger.app.util.ChartMath
 import java.time.LocalDate
 import java.time.format.DateTimeFormatter
 import java.util.Locale
@@ -96,7 +96,7 @@ private fun OverviewTab(
     nav: Navigator,
     quickRecord: () -> Unit,
 ) {
-    val series = remember(allRecords) { Series.cumulative(allRecords) }
+    val series = remember(allRecords) { ChartMath.chartPoints(allRecords) }
     val sumMap = remember(summaries) { summaries.associateBy { it.projectId } }
     val net = summaries.sumOf { it.income } - summaries.sumOf { it.expense }
     val today = remember {

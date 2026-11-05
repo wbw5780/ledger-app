@@ -49,6 +49,7 @@ object Dates {
     private val dateTime = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm")
     private val date = DateTimeFormatter.ofPattern("yyyy-MM-dd")
     private val shortDate = DateTimeFormatter.ofPattern("yy/MM/dd")
+    private val monthDaySlash = DateTimeFormatter.ofPattern("MM/dd")
     private val monthDayTime = DateTimeFormatter.ofPattern("MM-dd HH:mm")
     private val month = DateTimeFormatter.ofPattern("yyyy年M月")
 
@@ -57,6 +58,8 @@ object Dates {
     fun monthDayTime(ts: Long): String = Instant.ofEpochMilli(ts).atZone(zone).format(monthDayTime)
     fun epochDay(ts: Long): Long = Instant.ofEpochMilli(ts).atZone(zone).toLocalDate().toEpochDay()
     fun dayLabel(epochDay: Long): String = LocalDate.ofEpochDay(epochDay).format(shortDate)
+    /** 图表查值 chip 用：MM/dd */
+    fun monthDayLabel(epochDay: Long): String = LocalDate.ofEpochDay(epochDay).format(monthDaySlash)
     fun monthKey(ts: Long): Int {
         val d = Instant.ofEpochMilli(ts).atZone(zone).toLocalDate()
         return d.year * 100 + d.monthValue

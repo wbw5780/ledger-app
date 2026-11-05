@@ -1,6 +1,6 @@
 # 构建结果
 
-**状态：全部交付物完成，构建成功。**（当前最新为第六轮 v1.5 微信 PDF 电子凭证解析修复，见文末「第六轮 微信 PDF 解析修复」）
+**状态：全部交付物完成，构建成功。**（当前最新为第七轮 v1.6 盈亏曲线图重做，见文末「第七轮 盈亏曲线图重做」）
 
 | # | 交付物 | 结果 |
 |---|---|---|
@@ -322,3 +322,54 @@ Signer #1 certificate DN: CN=Ledger, OU=Personal, O=Ledger, L=Local, C=CN
 - 交易时间按手机时区解析。凭证上标注的是北京时间，手机时区不是 UTC+8 时，时间会有偏移，这一点与 CSV 导入的行为一致。
 - 仍未在真机或模拟器上导入过。JVM 测试走的是 pdfbox-android 的 classpath 资源回退路径，提取链路与 App 中使用的是同一套代码。
 
+
+## 第七轮 盈亏曲线图重做
+
+**状态：完成。** `./gradlew :app:testDebugUnitTest :app:assembleDebug :app:assembleRelease` 全部 BUILD SUCCESSFUL；已发布到 GitHub Releases tag 7（发布核验见 apk-verify.txt 末尾）。
+
+| 项 | 结果 |
+|---|---|
+| 版本 | versionCode 6→7，versionName 1.5→1.6；仍用 `app/release.keystore` 签名，证书 SHA-256 `df55d71c…8fbbe` 不变，可在 App 内从 1.5 直接更新 |
+| `ledger.apk`（release） | 11133090 字节，SHA-256 `b30cb3bb…8ab1433`，apksigner v2 校验通过 |
+| `ledger-debug.apk` | 14508032 字节 |
+| 单元测试 | 32 个全部通过、0 跳过（BillParserTest 7 + PdfBillParserTest 9 + PdfTableParserTest 7 + UpdateCheckerTest 6 + 新增 ChartMathTest 3） |
+| 零回归 | `csv/`、`data/`、`util/Series.kt` 及原有 3 个解析测试文件相对上一轮 `84b17ce` 零改动（apk-verify.txt 中有 git diff 核对）；真实微信样本仍解析出 28 笔、跳过 0 |
+| apk-verify.txt | 重新生成：两个 APK 的 badging、apksigner、versionCode 7/1.6、APK SHA-256；dex 中存在 MonotoneSpline / ChartMath / ChartKt，以及 Series / PdfTableParser / BillParser / UpdateChecker；解析代码零改动核对；真实样本笔数；图表配色对比度；单元测试结果；GitHub Releases 发布核验 |
+
+### 改动
+
+- **`util/ChartMath.kt`（新增，纯 Kotlin，可单测）**
+  - `MonotoneSpline`：Fritsch–Carlson 单调三次 Hermite 样条，支持非等距 x。内部点两侧斜率异号或为 0 时切线取 0；平段两端切线强制为 0；α²+β²>9 时按 τ=3/√(α²+β²) 缩放。所以每段曲线都落在两端点值之间，不会过冲，平段是严格的水平直线。`controlPoints(i)` 把每段转成三次贝塞尔控制点（x 取 1/3、2/3 处），绘制时直接 `cubicTo`；`evaluate(x)` 用于测试和刻度避让。
+  - `chartPoints(records)`：调用 `Series.cumulative(records, Int.MAX_VALUE)` 得到完整的逐日累计序列（补零日、前缀和逻辑原样复用），再用 `compressFlat` 把连续平值日压成首尾两点，最后用原 `Series.downsample` 做极值抽样，结果 ≤240 点。
+  - `nearestIndex`（二分找最近采样点）、`chipLeft`（chip 居中于手指，靠近边缘时内移，不会被裁切）、`yRange`（值域包含 0，上下各留 11% 空白）。
+- **`ui/Chart.kt`（重写）`CumulativeChart`**
+  - 线：样条路径，2.5dp，`StrokeCap.Round` + `StrokeJoin.Round`，整条线用主文字色（`onSurface`：浅色 #111111 / 深色 #F5F5F5），不再分段变色。
+  - 面积：填充路径从曲线围到零轴，用 `clipRect` 按 y0 分成上下两块分别画。上方是主文字色 12%→0% 竖直渐变，下方是红色 10%→0%。
+  - 零轴：1dp 虚线（6dp/6dp），#999999 60%，只画在首末数据点之间。
+  - 刻度：不画边框和 Y 轴。底部只有首日期（左）、末日期（右），10sp #8A8A8A。右侧最多 3 个数值标签（max / min / 0），10sp #8A8A8A，`tnum`，贴右缘右对齐。画之前会沿曲线采样，并检查端点圆点和已画的标签，有重叠就不画。
+  - 端点：半径 5dp 实心圆，外加 2dp 卡片底色描边；净值 <0 时为红色。
+  - 单个数据点：居中画一个点，上方显示数值、底部显示日期，不画线。
+  - 触摸查值：`pointerInput` + `awaitEachGesture`，按下立即显示，拖动时跟随。显示内容：最近采样点上的 1dp 竖直指示线（#999 40%）、放大的圆点（半径 6.5dp + 卡片色描边）、浮动 chip。chip 圆角 8dp，主文字色底，反色（卡片色）文字 11sp，内容「MM/dd · ±¥xx.xx」。chip 默认在点上方，空间不够时放到下方，左右靠边时内移。松手后用 `animateFloatAsState` 在 300ms 内淡出。
+  - 手势冲突：横向移动超过 touchSlop 才消费事件。如果先出现竖直滑动，就退出手势交给外层 `LazyColumn` 滚动，查值层随之淡出。
+  - 加了 `contentDescription`（日期范围 + 当前累计值），方便无障碍读屏。
+- **调用方**：`HeroProfitCard` 新增 `chartHeight` 参数。总览卡 160dp（`ChartHeightOverview`），项目详情 200dp（`ChartHeightDetail`），两处共用同一个组件。`HomeScreen` / `ProjectDetailScreen` 的数据源改为 `ChartMath.chartPoints`。
+- **`Dates.monthDayLabel`**：新增 MM/dd 格式，供 chip 使用。
+- **测试 `ChartMathTest`**
+  1. 样条：非等距、陡升陡降、平段、尖峰数据逐段密集采样，检查不越界、段内单调、平段为直线、经过数据点；贝塞尔控制点与 Hermite 求值一致，控制点也在段内上下界之间；另有 300 点随机数据检查全局不越界。
+  2. 采样：首日 +1 元、100 天后 -3 元，压缩成 3 点；2000 天随机记账结果 ≤240 点，首末点、全局极值都保留，日期严格递增，每个点都与原累计序列一致；原 `Series.cumulative` 默认 ≤200 的行为不变。
+  3. chip：居中、靠左、靠右、带 margin、超宽各情况，以及 -50..350 全程不裁切；`nearestIndex` 的边界情况。
+
+### 与 SPEC 不同 / 需要说明的地方
+
+- **面积填充围到零轴，而不是图底部。** SPEC 写的是「从线到图底部」，同时又要求按 y0 上下分色。如果填到图底部，曲线在零轴以上时，零轴以下那一段也会被染成红色，含义就错了。所以改成从曲线围到零轴：上方灰色从曲线处 12% 渐隐到零轴，下方红色从曲线最低处 10% 渐隐到零轴（与上方对称，都是靠近曲线的一侧最浓）。数据全为正时，零轴就在底部留白处，看起来与「填到底部」基本一致。
+- **值域始终包含 0。** 这样零轴总在画面内，红/灰分区才有意义，右侧「0」刻度也总能参与判断。代价是：如果累计值一直远离 0（例如始终在 5000～8000），曲线起伏会被压缩。
+- **「5dp 实心圆点」按半径理解**（直径 10dp，加 2dp 描边后总直径 14dp）。按直径 5dp 画只有线宽的 2 倍，几乎看不出是端点。
+- **chip 金额不分黑/红**，统一用反色文字。深色主题下 chip 底是 #F5F5F5，红色 #F07178 在上面对比度太低，SPEC 也允许这样处理。
+- **采样 ≤240 只用于图表。** `Series.cumulative` 的签名和默认 200 点不变（原单测不动）。图表走新的 `ChartMath.chartPoints`：先拿完整序列，压缩平值日后再抽样，因此平值日多的数据能保留更多真实的拐点。
+- **深浅色确认方式：没有加 Compose Preview。** 项目没有引入 `ui-tooling` 依赖，本轮也不想为此新增依赖。改为代码走查加 WCAG 对比度计算（见 apk-verify.txt）：曲线对卡片底色的对比度浅色 18.9:1、深色 16.4:1；刻度 3.5:1 / 5.2:1；红端点 3.9:1 / 6.3:1。另外用 Python 按同样的样条和配色画了一张示意图，粗看线条和分色效果，这张图不进交付物。
+
+### 本轮已知限制
+
+- 仍未在真机或模拟器上运行，触摸手感（与列表滚动的冲突处理、淡出节奏）和字号间距没有实机核对。
+- 数据稀疏的账本（很多天没有记录）累计曲线本来就是「平台—跳变」的阶梯形。单调样条保证不失真、不过冲，所以跳变处仍然比较陡，这是按 SPEC 要求的取舍。
+- 右侧刻度为了避让曲线和端点，可能一个都不显示（例如曲线在右端正好穿过三个刻度的位置）。此时可以按住图表查看具体数值。

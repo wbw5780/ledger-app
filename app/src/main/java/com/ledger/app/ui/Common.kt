@@ -343,7 +343,13 @@ fun TrendBadge(cents: Long) {
 
 /** 盈亏主卡：标签 + 净额大数字（正数主文字色 / 负数红 + ↑↓）+ 卡内累计曲线 */
 @Composable
-fun HeroProfitCard(label: String, net: Long, series: List<SeriesPoint>, modifier: Modifier = Modifier) {
+fun HeroProfitCard(
+    label: String,
+    net: Long,
+    series: List<SeriesPoint>,
+    modifier: Modifier = Modifier,
+    chartHeight: Dp = ChartHeightOverview,
+) {
     LedgerCard(modifier.fillMaxWidth(), contentPadding = PaddingValues(start = 20.dp, end = 20.dp, top = 20.dp, bottom = 14.dp)) {
         Text(label, style = MaterialTheme.typography.titleSmall, color = MaterialTheme.colorScheme.onSurfaceVariant)
         Spacer(Modifier.height(6.dp))
@@ -353,7 +359,7 @@ fun HeroProfitCard(label: String, net: Long, series: List<SeriesPoint>, modifier
             TrendBadge(net)
         }
         Spacer(Modifier.height(14.dp))
-        CumulativeChart(series, height = 170.dp)
+        CumulativeChart(series, height = chartHeight)
     }
 }
 
