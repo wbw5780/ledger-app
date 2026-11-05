@@ -1,6 +1,6 @@
 # 构建结果
 
-**状态：全部交付物完成，构建成功。**（当前最新为第四轮 v1.3 自动更新，见文末「第四轮 应用内自动更新」）
+**状态：全部交付物完成，构建成功。**（当前最新为第五轮 v1.4 黑白配色，见文末「第五轮 黑白配色」）
 
 | # | 交付物 | 结果 |
 |---|---|---|
@@ -215,3 +215,53 @@ Signer #1 certificate DN: CN=Ledger, OU=Personal, O=Ledger, L=Local, C=CN
 - 国内直连 GitHub 不稳定，可能需要代理。按要求没有做镜像兜底，连不上时静默检查不打扰用户，只有手动检查会提示
 - 已装 1.2 的设备没有更新模块，需要手动安装一次 1.3，之后才能在 App 内更新
 - 每次 release 构建的 APK 不是逐字节可复现的。本轮最后一次发布用的是最终源码（提交 `23f666c`，tag 4 指向它）构建的包，Release、`ledger.apk` 和 apk-verify.txt 里记录的 SHA-256 一致
+
+## 第五轮 黑白配色
+
+**状态：完成。** `./gradlew :app:testDebugUnitTest :app:assembleDebug :app:assembleRelease` 全部 BUILD SUCCESSFUL。提交 `114880b`「UI: 黑白配色主题（v1.4，versionCode 5）」已推送到 `main`；`/root/publish-ledger.sh` 执行成功，releases/latest 指向 tag 5。这一轮只换配色，没有改功能逻辑。
+
+| 项 | 结果 |
+|---|---|
+| 版本 | versionCode 4→5，versionName 1.3→1.4。仍用 `app/release.keystore` 签名，证书 SHA-256 `df55d71c…8fbbe` 不变，1.3 可以在 App 内直接更新覆盖安装 |
+| `ledger.apk`（release） | 11100322 字节，SHA-256 `b8ba4c73…6d792f`，apksigner v2 校验通过 |
+| `ledger-debug.apk` | 14189179 字节 |
+| 单元测试 | 22 个全部通过、0 跳过（BillParserTest 7 + PdfBillParserTest 9 + UpdateCheckerTest 6），测试代码一行没动 |
+| Release | `releases/latest`：`tag_name=5`、`name=v1.4`、body=「全新黑白配色：去掉绿色与金色，仅保留支出/负数红色语义色」，资产 `ledger.apk` 11100322 字节，content_type `application/vnd.android.package-archive`。发布脚本自检通过；另外匿名完整下载了一次：302 跳到 release-assets.githubusercontent.com 后返回 200，字节数和 SHA-256 都与本地一致 |
+| token 安全 | 已扫描发布日志、apk-verify、README、RESULT、脚本、工作目录和 git 全部历史，都没有出现 token |
+| apk-verify.txt | 重新生成：两个 APK 的 badging、apksigner，以及本轮检查：versionCode 5/1.4；签名证书；颜色资源（bg_light `#F4F4F4`、bg_dark `#0B0B0B`、brand_ink `#111111`、brand_paper `#F5F5F5`，`brand_emerald` 出现 0 次）；Theme.Ledger 四套配置的 windowBackground、colorPrimary 和 Splash 背景；启动图标三层 drawable 及内联渐变的实际颜色（`#1A1A1A`→`#0A0A0A`、前景全白）；源码中旧色值残留（无）；源码里全部颜色字面量的去重清单；dex 关键类和自动更新字符串回归；GitHub 匿名核验；单元测试结果。前几轮的历史核验记录可以在 git 历史中查到 |
+| 源码包 | `/root/ledger-app-source.zip` 已用 `git archive HEAD` 重打（只含仓库跟踪的文件，不含 keystore、构建产物和 APK） |
+
+### 配色
+
+| | 浅色 | 深色 |
+|---|---|---|
+| 页面背景 / 卡片 | `#F4F4F4` / `#FFFFFF`（极淡纯黑阴影） | `#0B0B0B` / `#171717` + 1dp `#262626` 描边 |
+| 主文字 / 次级文字 | `#111111` / `#8A8A8A` | `#F5F5F5` / `#9A9A9A` |
+| primary（主按钮、选中 chip、导航药丸、勾选标记） | `#111111` 底白字 | `#F5F5F5` 底黑字 |
+| tonal（次按钮、未选中 chip、来源徽标） | `#EAEAEA` 底黑字 | `#232323` 底白字 |
+| 分隔线 | `#E5E5E5` | `#262626` |
+| 支出 / 负盈亏（唯一的彩色） | `#E5484D` | `#F07178` |
+| 收入 / 正盈亏 | 主文字色 + 「+」号 | 主文字色 + 「+」号 |
+
+### 改动
+
+- **`ui/Theme.kt`**：`Brand` 中去掉 Emerald/Gold，改为 `Ink #111111`、`Paper #F5F5F5` 和两种支出红。亮/暗两套 `colorScheme` 全部槽位重新赋为灰阶，`error` 用支出红，所以删除按钮等也是这个红色。`LedgerPalette` 去掉 `gold`，新增 `badge/onBadge`（中性徽标）、`iconBg`（项目图标容器灰底 `#EDEDED`/`#232323`）、`onIncome`（以收入色为底时上面的文字色）；`income` 改为主文字色。
+- **`ui/Chart.kt`**：线条 3dp；零轴以上为主文字色，填充是主文字色 18%→透明的渐变，看起来是灰色；零轴以下为红色，填充 25%→透明；零轴仍是淡灰虚线；末端光晕从暖金改为 `onSurfaceVariant` 30% 的灰色。
+- **`ui/Common.kt`**：`GoldBadge` 改名为 `CountBadge`，用中性灰底（调用处 ImportPreview/UpdateUi/RecordEdit 同步改名）；项目图标容器不再从图标取平均色，统一用 `iconBg`，因此删掉了 `averageColor`；`PillChip` 未选中时为 tonal 灰底、主文字色、无描边，选中时为主色底；卡片和底栏阴影去掉原来的绿色偏色（`0x..0E3B2C` 改为纯黑低透明度）；底部导航沿用 primary/onPrimary，所以选中状态在浅色下是黑药丸白图标，深色下是白药丸黑图标，未选中为灰色。
+- **`ui/HomeScreen.kt`**：「我的」页品牌卡的渐变改为 `#1A1A1A`→`#0A0A0A`；深色下改为 `#2A2A2A`→`#1A1A1A` 加描边，避免和 `#0B0B0B` 背景混在一起。「本地」徽标改为白底黑字；引导步骤的序号改为主色底（浅色黑底白字，深色白底黑字）。
+- **`ui/RecordEditScreen.kt`**：收支切换中，「收入」选中时底色是主文字色，文字改用 `onIncome`（否则深色下会出现白底白字）；「支出」选中仍是红底白字。
+- **资源**：`colors.xml` 中 `brand_emerald*` 换成 `brand_ink`/`brand_paper`，`bg_light`/`bg_dark` 改为 `#F4F4F4`/`#0B0B0B`。四套 `themes.xml` 的 windowBackground、colorPrimary/Accent、Splash 背景（v31 / night-v31）同步修改。
+- **启动图标**：背景为 `#1A1A1A`→`#0A0A0A` 斜向渐变，右上角加一层极淡白光；前景是白色线框账本（与 monochrome 层几何形状相同）、白色上升折线和白色实心端点，两条横线为 70% 白；monochrome 层也补上了端点。
+- **README**：版本号和视觉描述已更新。
+- **全局残留检查**：在 `app/src` 中 grep 了 `0E7C5A、3DBE8C、2E9E6B、D9A441、E6B75A、139069、0A5C43、F6F7F4、101413、E25B5B、FF7A7A、4CC48A、8A6111、3A2A00、0E3B2C、DCF1E7、E3F2EA、7FDDB2、7FD6AE、1A201E、brand_emerald、Gold/Emerald`，结果为 0。源码里剩下的颜色字面量只有灰阶和红色系（支出红及其 error 容器色），完整清单见 apk-verify.txt。
+
+### 与 SPEC 不同 / 需要说明的地方
+
+- **曲线零轴以下的线条用红色**：SPEC 写的是「线条=主文字色」，但同时规定负盈亏用红色，而且零轴以下的填充也是红色。所以这里零轴以上的线条用主文字色，零轴以下的线条用红色，和填充、净额数字的颜色一致。如果希望整条线都是黑/白，只需把 `Chart.kt` 中下半部分的 `drawPath(line, neg, …)` 改成 `pos`。
+- **深色品牌卡**：SPEC 对这张卡没有规定。如果照搬浅色的黑渐变，深色下会和背景融在一起，所以改用 `#2A2A2A`→`#1A1A1A` 加描边。
+- **APK 中残留一个绿色值**：androidx.core 库自带 `color/call_notification_answer_color #1D873B`（通话通知样式用），App 的 UI 没有引用它，所以没有处理。
+
+### 本轮已知限制
+
+- 和前几轮一样，没有在真机或模拟器上看过实际效果，以编译、单元测试和 aapt 资源核验为准。灰阶的层次（例如 `#F4F4F4` 背景与白卡片、`#0B0B0B` 与 `#171717`）是按 SPEC 取值的，实机观感可能还需要微调。
+- Material3 内置组件（DatePicker、TimePicker、AlertDialog、进度条等）的颜色来自 colorScheme，已全部换成灰阶，但同样没有截图核对。

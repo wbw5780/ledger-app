@@ -9,3 +9,10 @@ local.properties
 app/release.keystore
 .idea/
 *.iml
+
+# 真实账单样本（含个人交易数据），绝不提交
+sample-wechat.pdf
+wechat-sample.pdf
+*.pdf
+!app/src/test/resources/**/*.pdf
+pdf-parse-check.txt

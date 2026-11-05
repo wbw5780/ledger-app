@@ -208,6 +208,17 @@ Lcom/tom_roush/pdfbox/pdmodel/PDDocument; -> found
 https://api.github.com/repos/wbw5780/ledger-app/releases/latest -> 1
 application/vnd.android.package-archive -> 1
 
+
+===== GitHub Releases 发布核验（匿名，不带 token）=====
+tag_name=5 name=v1.4 draft=False prerelease=False
+body=全新黑白配色：去掉绿色与金色，仅保留支出/负数红色语义色
+asset=ledger.apk size=11100322 content_type=application/vnd.android.package-archive
+url=https://github.com/wbw5780/ledger-app/releases/download/5/ledger.apk
+首跳 HTTP/2 302 
+完整下载：最终 HTTP 200，重定向 1 次，最终主机 https://release-assets.githubusercontent.com
+下载字节 11100322，本地 ledger.apk 11100322
+SHA-256 一致：b8ba4c738b7ea3c0676e21c121b9ff77873bd32a043b2a156647ec5b3f6d792f
+
 --- 单元测试结果（app/build/test-results/testDebugUnitTest）---
 <testsuite name="com.ledger.app.BillParserTest" tests="7" skipped="0" failures="0" errors="0"
 <testsuite name="com.ledger.app.PdfBillParserTest" tests="9" skipped="0" failures="0" errors="0"
