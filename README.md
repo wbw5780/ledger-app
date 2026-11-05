@@ -87,7 +87,7 @@ release 签名使用 `app/release.keystore`（别名 `ledger`，密码 `ledger12
 原理：
 1. 启动进入主界面 2 秒后静默请求一次 `https://api.github.com/repos/wbw5780/ledger-app/releases/latest`（`Accept: application/vnd.github+json`，HttpURLConnection，超时 10s）。release 的 `tag_name` 是数字 versionCode，比本机 `longVersionCode` 大才弹窗「发现新版本 v<版本名>」，正文为 release notes；静默检查的任何失败都不提示。
 2. 「我的」页「检查更新」可手动检查，状态依次显示为 检查中 / 已是最新 / 新版 vX / 检查失败点击重试；手动检查失败会 toast「检查更新失败，请检查网络（需能访问 GitHub）」。
-3. 「立即更新」：直接下载资产 `ledger.apk` 的 `browser_download_url`（github.com 会 302 到 objects.githubusercontent.com，全程 HTTPS），流式写到 `cacheDir/updates/ledger.apk`，弹窗显示进度条、百分比、已下载/总 MB，可「取消」（终止下载并删除临时文件）。
+3. 「立即更新」：直接下载资产 `ledger.apk` 的 `browser_download_url`（github.com 会 302 到 release-assets.githubusercontent.com，全程 HTTPS），流式写到 `cacheDir/updates/ledger.apk`，弹窗显示进度条、百分比、已下载/总 MB，可「取消」（终止下载并删除临时文件）。
 4. 下载完成后校验文件大小必须等于 asset size（不符就删除并提示「下载不完整，请重试」），再检查包名和 versionCode 与 release 一致，然后通过 FileProvider（`com.ledger.app.fileprovider`）content URI 打开系统安装器。Android 8+ 首次安装需要允许「安装未知应用」：App 会先弹说明，点「去设置」跳到本应用的开关页，返回后自动重新拉起安装。
 5. 新版用同一个 `app/release.keystore` 签名，所以可以直接覆盖安装，数据不会丢。
 
@@ -95,7 +95,7 @@ release 签名使用 `app/release.keystore`（别名 `ledger`，密码 `ledger12
 
 ## 已知限制
 
-- **自动更新依赖直连 GitHub**：国内网络访问 api.github.com / objects.githubusercontent.com 经常很慢或失败，可能需要代理/VPN。连不上时只有手动「检查更新」会提示失败，App 其他功能不受影响。也可以到 Releases 页面手动下载 APK 安装。
+- **自动更新依赖直连 GitHub**：国内网络访问 api.github.com / github.com / release-assets.githubusercontent.com 经常很慢或失败，可能需要代理/VPN。连不上时只有手动「检查更新」会提示失败，App 其他功能不受影响。也可以到 Releases 页面手动下载 APK 安装。
 - GitHub API 匿名请求每个 IP 每小时限 60 次，正常使用（启动查一次）不会触到上限。
 - 公开仓库里没有签名 keystore（只保存在构建服务器上）。别人用仓库源码构建出的 APK 签名不同，无法覆盖安装发布版。
 - 1.2 及更早版本没有更新模块，从 1.2 升到 1.3 需要手动安装一次；之后的版本可以在 App 内更新。

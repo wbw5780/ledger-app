@@ -115,7 +115,7 @@ object UpdateChecker {
 
     /**
      * 流式下载到 cacheDir/updates/ledger.apk。
-     * github.com → objects.githubusercontent.com 的 https 跨主机 302 由 HttpURLConnection 自动跟随
+     * github.com → release-assets.githubusercontent.com 的 https 跨主机 302 由 HttpURLConnection 自动跟随
      * （同协议重定向）；保险起见这里也手动处理 3xx。不带任何 Authorization 头。
      * 协程取消、网络错误、大小不符时都会删除临时文件。
      * @param onProgress (已下载字节, 总字节)，在 IO 线程回调
