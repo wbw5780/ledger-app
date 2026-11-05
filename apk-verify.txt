@@ -268,3 +268,17 @@ pdftotext 笔数=28  本解析器笔数=28
 <testsuite name="com.ledger.app.PdfTableParserTest" tests="7" skipped="0" failures="0" errors="0"
 <testsuite name="com.ledger.app.UpdateCheckerTest" tests="6" skipped="0" failures="0" errors="0"
 <testsuite name="com.ledger.app.PdfBillParserTest" tests="9" skipped="0" failures="0" errors="0"
+
+
+===== GitHub Releases 发布核验（匿名，不带 token）=====
+tag_name=6 name=v1.5 draft=False prerelease=False
+body=修复微信PDF账单（交易电子凭证）识别错误
+asset=ledger.apk size=11116706 content_type=application/vnd.android.package-archive
+url=https://github.com/wbw5780/ledger-app/releases/download/6/ledger.apk
+首跳 HTTP/2 302 
+完整下载：最终 HTTP 200，重定向 1 次
+下载字节 11116706，本地 ledger.apk 11116706
+SHA-256 一致：fc64fe8876fb3e8e9f34d7069446a3c76e0452f4df9d673f21ba8cac7ee11200
+tag 6 指向：001cd01
+远端 main 树中 sample-wechat.pdf：HTTP 404
+旧提交 cf16ac7 中该文件（GitHub 缓存）：HTTP 200

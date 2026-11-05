@@ -228,6 +228,8 @@ Signer #1 certificate DN: CN=Ledger, OU=Personal, O=Ledger, L=Local, C=CN
 | 单元测试 | 22 个全部通过、0 跳过（BillParserTest 7 + PdfBillParserTest 9 + UpdateCheckerTest 6），测试代码一行没动 |
 | Release | `releases/latest`：`tag_name=5`、`name=v1.4`、body=「全新黑白配色：去掉绿色与金色，仅保留支出/负数红色语义色」，资产 `ledger.apk` 11100322 字节，content_type `application/vnd.android.package-archive`。发布脚本自检通过；另外匿名完整下载了一次：302 跳到 release-assets.githubusercontent.com 后返回 200，字节数和 SHA-256 都与本地一致 |
 | token 安全 | 已扫描发布日志、apk-verify、README、RESULT、脚本、工作目录和 git 全部历史，都没有出现 token |
+| 提交 / 发布 | 提交 `001cd01`「fix: 微信PDF电子凭证按坐标分列解析（v1.5，versionCode 6）」已推送 `main`；`/root/publish-ledger.sh "修复微信PDF账单（交易电子凭证）识别错误"` 自检通过。匿名请求 `releases/latest` 得到 `tag_name=6`、`name=v1.5`，资产 `ledger.apk` 11116706 字节，content_type `application/vnd.android.package-archive`，tag 6 指向 `001cd01`；匿名完整下载一次：302 → 200，字节数和 SHA-256 都与本地一致。发布日志、apk-verify、RESULT 中均未出现 token |
+| 源码包 | `/root/ledger-app-source.zip` 用 `git archive HEAD` 重新打包（只含仓库跟踪的文件）；已确认不含 sample-wechat.pdf、pdf-parse-check.txt，也不含 keystore 和 APK |
 | apk-verify.txt | 重新生成：两个 APK 的 badging、apksigner，以及本轮检查：versionCode 5/1.4；签名证书；颜色资源（bg_light `#F4F4F4`、bg_dark `#0B0B0B`、brand_ink `#111111`、brand_paper `#F5F5F5`，`brand_emerald` 出现 0 次）；Theme.Ledger 四套配置的 windowBackground、colorPrimary 和 Splash 背景；启动图标三层 drawable 及内联渐变的实际颜色（`#1A1A1A`→`#0A0A0A`、前景全白）；源码中旧色值残留（无）；源码里全部颜色字面量的去重清单；dex 关键类和自动更新字符串回归；GitHub 匿名核验；单元测试结果。前几轮的历史核验记录可以在 git 历史中查到 |
 | 源码包 | `/root/ledger-app-source.zip` 已用 `git archive HEAD` 重打（只含仓库跟踪的文件，不含 keystore、构建产物和 APK） |
 
@@ -312,7 +314,7 @@ Signer #1 certificate DN: CN=Ledger, OU=Personal, O=Ledger, L=Local, C=CN
 
 - **列边界不用表头 X 起点，改用相邻表头之间空隙的中点，并按词的中心归列。** 真实样本中，日期 `2026-11-05` 的 x=113.0，而表头「交易时间」的 x=115.0；商户单号 x=507.3，表头「商户单号」x=509.3，但「收/付款说明」表头结束于 505.8。表头是居中的，数据比表头宽，如果按「X 起点」划界，日期和商户单号都会分错列。
 - **交易起始只要求「交易时间列出现日期」**。SPEC 写的是「单号列有新数字且时间列有日期」，样本中这两个条件总是同时成立；只看日期更宽松，单号缺失时不会把两笔交易并成一笔，此时用哈希作为去重键。
-- **发现并处理了一处隐私泄漏**：上一轮提交 `cf16ac7` 把用户放在仓库目录里的真实样本 `sample-wechat.pdf` 一起提交并推送到了公开仓库（原因是用了 `git add` 整目录，`.gitignore` 没有排除它）。本轮一开始就把它从该提交中移除（`git commit --amend`），并用 `--force-with-lease` 推送，`main` 从 `cf16ac7` 变为 `a0bb484`，内容只少了这个 PDF。tag 4/5 指向更早的提交，不含该文件。旧的 `/root/ledger-app-source.zip` 也包含它，本轮已重新生成。**残留风险**：被覆盖的提交 `cf16ac7` 在 GitHub 上仍可能通过 SHA 直接访问，直到 GitHub 做垃圾回收；也可能已被他人克隆或缓存。如需彻底清除，要联系 GitHub Support 申请清除缓存视图。本地保留了备份分支 `backup-cf16ac7-with-sample`（不推送），确认不需要后可以 `git branch -D` 删除。
+- **发现并处理了一处隐私泄漏**：上一轮提交 `cf16ac7` 把用户放在仓库目录里的真实样本 `sample-wechat.pdf` 一起提交并推送到了公开仓库（原因是用了 `git add` 整目录，`.gitignore` 没有排除它）。本轮一开始就把它从该提交中移除（`git commit --amend`），并用 `--force-with-lease` 推送，`main` 从 `cf16ac7` 变为 `a0bb484`，内容只少了这个 PDF。tag 4/5 指向更早的提交，不含该文件。旧的 `/root/ledger-app-source.zip` 也包含它，本轮已重新生成。**残留风险（已实测）**：远端 `main` 上该文件已经 404，但通过 contents API 按旧 SHA 访问 `cf16ac7` 时仍返回 200，即被覆盖的提交仍可通过 SHA 直接访问，直到 GitHub 做垃圾回收；也可能已被他人克隆或缓存。如需彻底清除，要联系 GitHub Support 申请清除缓存视图。本地保留了备份分支 `backup-cf16ac7-with-sample`（不推送），确认不需要后可以 `git branch -D` 删除。
 
 ### 本轮已知限制
 
