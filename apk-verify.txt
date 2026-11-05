@@ -407,7 +407,7 @@ url=https://github.com/wbw5780/ledger-app/releases/download/4/ledger.apk
 首跳 HTTP/2 302 
 完整下载：最终 HTTP 200，重定向 1 次，最终主机 https://release-assets.githubusercontent.com
 下载字节 11116658，本地 ledger.apk 11116658
-SHA-256 一致：2c3c65f501b4c63622c04233ee91b05cf59745af759112d084f1b3cb5b62bb9d
+SHA-256 一致：ddb33d4fd092c22d039daf97c5ea2595b743d458d89675dae68ae5240d8cbfdb
 
 --- 单元测试结果（app/build/test-results/testDebugUnitTest）---
 <testsuite name="com.ledger.app.BillParserTest" tests="7" skipped="0" failures="0" errors="0"

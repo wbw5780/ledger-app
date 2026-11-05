@@ -154,3 +154,64 @@ Signer #1 certificate DN: CN=Ledger, OU=Personal, O=Ledger, L=Local, C=CN
 - 环境里没有模拟器和真机，界面没有截图核对。判断依据只有编译通过、代码走查和 aapt 资源检查，实机上个别间距、字号或阴影深浅可能还需要微调。
 - 图标容器的淡色取的是图标像素的平均色，对颜色很杂的图标效果偏灰（不影响使用）。
 - 已从 `app/build.gradle.kts` 删掉直接依赖 `material-icons-core`，代码里也不再 import 它；但 material3 本身会把它作为传递依赖带进来（比如下拉框箭头 `ExposedDropdownMenuDefaults.TrailingIcon` 就用到它），所以 APK 体积没有变化。
+
+
+## 第四轮 应用内自动更新
+
+**状态：完成。** `./gradlew :app:testDebugUnitTest :app:assembleDebug :app:assembleRelease` 全部 BUILD SUCCESSFUL。仓库已推送，Release v1.3 已实际发布，服务器上匿名完整下载已验证。更新源只有 GitHub Releases，没有任何镜像。
+
+| 项 | 结果 |
+|---|---|
+| GitHub 仓库 | <https://github.com/wbw5780/ledger-app>（public），分支 `main`。`.gitignore` 排除 `.gradle/`、`.kotlin/`、`build/`、`app/build/`、`local.properties`、`*.apk`、`*.keystore`/`*.jks`、`app/release.keystore`。已核对：仓库 `app/` 下只有 `build.gradle.kts`、`schemas`、`src`，没有 keystore |
+| 版本 | versionCode 3→4，versionName 1.2→1.3。release 仍用 `app/release.keystore` 签名，证书 SHA-256 `df55d71c…8fbbe` 不变，可直接覆盖安装 1.2 |
+| `ledger.apk`（release） | 11116658 字节，SHA-256 `ddb33d4f…8cbfdb`，apksigner v2 校验通过 |
+| `ledger-debug.apk` | 14206860 字节 |
+| 单元测试 | 22 个全部通过、0 跳过（原 16 个 + 新增 `UpdateCheckerTest` 6 个） |
+| 发布脚本 | `/root/publish-ledger.sh`（chmod +x，仓库中另有一份副本 `scripts/publish-ledger.sh`），共实际执行 4 次，均成功。从第 2 次起每次都先删除同 tag 的旧 release 和 tag，所以「可重复发布」这条路径也跑过了 |
+| Release | `releases/latest`：`tag_name=4`、`name=v1.3`、body=「新增应用内自动更新：自动检查 GitHub Releases，应用内下载并引导安装」，资产 `ledger.apk` 11116658 字节 |
+| 匿名下载 | 不带 token：`browser_download_url` 先 302 到 release-assets.githubusercontent.com，再返回 200，完整下载 11116658 字节，SHA-256 与本地 `ledger.apk` 一致。另外用 JDK 的 HttpURLConnection 按 App 相同的写法请求了一遍：API 返回 200，下载时自动跟随跨主机 302，最终 200，读到的字节数等于 asset size |
+| token 安全 | 脚本把 `Authorization` 头通过 stdin 交给 `curl -K -`，不会出现在命令行参数、`ps` 或输出里。已扫描 4 次发布日志、脚本、git 全部历史和工作目录，都没有出现 token |
+| apk-verify.txt | 两个 APK 的 aapt badging、apksigner、第二/三轮记录，以及本轮检查：versionCode 4/1.3；INTERNET + REQUEST_INSTALL_PACKAGES 权限；cleartext 出现 0 次；FileProvider（authority `com.ledger.app.fileprovider`）；`file_paths.xml` 内容；更新模块的类都在 dex 中；没有 OkHttp；关键字符串常量；GitHub 匿名核验；单元测试结果 |
+| 源码包 | `/root/ledger-app-source.zip` 已重打，内容与 git 仓库跟踪的文件一致（不含 keystore、构建产物和 APK） |
+
+### 改动
+
+- **`util/UpdateChecker.kt`**（新增）：
+  - 常量 `REPO_API_LATEST`，资产名 `ledger.apk`
+  - 请求方式：HttpURLConnection，连接和读取超时都是 10s；请求头 `Accept: application/vnd.github+json`，另带 `User-Agent`（GitHub API 要求）；在 `Dispatchers.IO` 协程里执行，不带任何 Authorization
+  - `parseRelease` 用 org.json 解析出 `tag_name`（数字）、`name`、`body`，以及 `assets[]` 里 `ledger.apk` 的 url 和 size
+  - `isNewer`：tag 严格大于本机 `longVersionCode` 才算有新版
+  - `download`：流式写入 `cacheDir/updates/ledger.apk`，约每 1% 回调一次进度。HttpURLConnection 会自动跟随 302，另外也手动处理 3xx，并拒绝非 HTTPS 地址。每读一块检查一次协程是否被取消。下载完要求文件大小等于 asset size，否则删除文件并抛 `IncompleteDownloadException`。取消或出错时都会删除文件
+  - 安装前用 `getPackageArchiveInfo` 再核对一次包名和 versionCode
+  - 安装：FileProvider content URI + `ACTION_VIEW` + `FLAG_GRANT_READ_URI_PERMISSION`
+  - Android 8+ 用 `canRequestPackageInstalls()` 判断安装权限，并提供跳转 `ACTION_MANAGE_UNKNOWN_APP_SOURCES`（带 `package:` uri）的 Intent
+- **`ui/UpdateUi.kt`**（新增）：
+  - `UpdateController` 状态机：检查状态有 Idle / 检查中 / 已是最新 / 发现新版 / 失败；当前弹窗有 新版提示 / 下载中 / 需要授权
+  - 静默检查吞掉所有错误；手动检查失败时 toast「检查更新失败，请检查网络（需能访问 GitHub）」
+  - 下载弹窗：进度条 + 百分比 + 「x / y MB」 + 「取消」（终止协程并删除临时文件），不能点外部或按返回键关闭；下载完成后自动拉起安装器
+  - 没有安装权限时先弹说明，点「去设置」跳到权限页；从设置页返回（onResume）后自动重试安装，仍未授权就再弹说明
+  - 新版提示弹窗：标题「发现新版本 v1.x」，显示安装包大小徽标和 changelog（可滚动），按钮「以后再说」/「立即更新」
+- **接入**：
+  - `MainActivity` 通过 `LocalUpdater` 提供 controller；进入主界面后 `delay(2s)` 静默检查一次（每个进程只查一次），只有发现新版才弹窗；用 `LifecycleResumeEffect` 处理从设置页返回
+  - 「我的」页在导出说明卡下面新增分组卡：「当前版本 v1.3」和「检查更新」两行。「检查更新」行右侧按状态显示：检查中（转圈）/ 已是最新 / 暖金徽标「新版 vX」（点击再次打开更新弹窗）/ 红字「检查失败，点击重试」
+  - 底部原有的版本号文字保留不动
+  - 品牌卡上的「离线」徽标改成「本地」，因为 App 现在会联网检查更新，但账目数据仍然只存在本机
+  - 新增自绘的 Download 图标
+- **Manifest**：新增 `INTERNET`、`REQUEST_INSTALL_PACKAGES` 权限；注册 FileProvider，`res/xml/file_paths.xml` 为 `<cache-path name="update" path="updates/"/>`。没有设置 usesCleartextTraffic，请求全部走 HTTPS
+- **构建**：
+  - 签名改成条件式：`app/release.keystore` 存在时才签名，这样从公开仓库克隆下来的源码也能构建。服务器上 keystore 存在，签名不受影响
+  - 新增 `testImplementation("org.json:json")`，只用于单测：android.jar 里的 org.json 是桩实现，测 `parseRelease` 需要真实实现。App 运行时用系统自带的 org.json，没有给 APK 增加依赖
+- **README**：新增「自动更新」一节（原理和发布流程）；在已知限制里补充：国内直连 GitHub 可能不通、需要代理；公开仓库不含 keystore；匿名 API 每小时限 60 次；1.2 升到 1.3 需要手动安装一次。另外注明「签名 keystore 保存在构建服务器」
+
+### 与 SPEC 不同的地方
+
+- **APK MIME 类型**：SPEC 写的是 `application/vnd.android-package-archive`（连字符），正确的类型是 `application/vnd.android.package-archive`（点号）。系统安装器按后者匹配，如果照 SPEC 写，`ACTION_VIEW` 会找不到安装器。第一次发布后，GitHub 回显的 content_type 让我发现了这个问题。App 的 Intent type 和上传资产的 Content-Type 都已改成正确值，单测里也锁定了这个常量，之后重新构建并重新发布
+- **重定向主机**：GitHub 资产现在 302 到 `release-assets.githubusercontent.com`，不是 SPEC 说的 objects.githubusercontent.com。这对 App 没有影响，跨主机 https→https 重定向会被自动跟随（已验证）
+- **建仓参数**：GitHub API 没有 `public` 参数，实际用的是 `"private": false`
+
+### 本轮已知限制
+
+- 仍然没有真机或模拟器。服务器端的 API、302 和完整下载已实际验证，App 端走的是同一套 HttpURLConnection 写法；但弹窗交互、系统安装器拉起、「安装未知应用」设置页往返，以及国产 ROM 自带安装器的行为，都没有在真机上确认
+- 国内直连 GitHub 不稳定，可能需要代理。按要求没有做镜像兜底，连不上时静默检查不打扰用户，只有手动检查会提示
+- 已装 1.2 的设备没有更新模块，需要手动安装一次 1.3，之后才能在 App 内更新
+- 每次 release 构建的 APK 不是逐字节可复现的。本轮最后一次发布用的是最终源码（提交 `23f666c`，tag 4 指向它）构建的包，Release、`ledger.apk` 和 apk-verify.txt 里记录的 SHA-256 一致
