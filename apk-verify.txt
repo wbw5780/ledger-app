@@ -1,0 +1,349 @@
+===== ledger-debug.apk (14408933 bytes) =====
+package: name='com.ledger.app' versionCode='3' versionName='1.2' platformBuildVersionName='15' platformBuildVersionCode='35' compileSdkVersion='35' compileSdkVersionCodename='15'
+sdkVersion:'26'
+targetSdkVersion:'35'
+uses-permission: name='android.permission.QUERY_ALL_PACKAGES'
+uses-permission: name='com.ledger.app.DYNAMIC_RECEIVER_NOT_EXPORTED_PERMISSION'
+application-label:'账本'
+application-label-af:'账本'
+application-label-am:'账本'
+application-label-ar:'账本'
+application-label-as:'账本'
+application-label-az:'账本'
+application-label-be:'账本'
+application-label-bg:'账本'
+application-label-bn:'账本'
+application-label-bs:'账本'
+application-label-ca:'账本'
+application-label-cs:'账本'
+application-label-da:'账本'
+application-label-de:'账本'
+application-label-el:'账本'
+application-label-en-AU:'账本'
+application-label-en-CA:'账本'
+application-label-en-GB:'账本'
+application-label-en-IN:'账本'
+application-label-en-XC:'账本'
+application-label-es:'账本'
+application-label-es-US:'账本'
+application-label-et:'账本'
+application-label-eu:'账本'
+application-label-fa:'账本'
+application-label-fi:'账本'
+application-label-fr:'账本'
+application-label-fr-CA:'账本'
+application-label-gl:'账本'
+application-label-gu:'账本'
+application-label-hi:'账本'
+application-label-hr:'账本'
+application-label-hu:'账本'
+application-label-hy:'账本'
+application-label-in:'账本'
+application-label-is:'账本'
+application-label-it:'账本'
+application-label-iw:'账本'
+application-label-ja:'账本'
+application-label-ka:'账本'
+application-label-kk:'账本'
+application-label-km:'账本'
+application-label-kn:'账本'
+application-label-ko:'账本'
+application-label-ky:'账本'
+application-label-lo:'账本'
+application-label-lt:'账本'
+application-label-lv:'账本'
+application-label-mk:'账本'
+application-label-ml:'账本'
+application-label-mn:'账本'
+application-label-mr:'账本'
+application-label-ms:'账本'
+application-label-my:'账本'
+application-label-nb:'账本'
+application-label-ne:'账本'
+application-label-nl:'账本'
+application-label-or:'账本'
+application-label-pa:'账本'
+application-label-pl:'账本'
+application-label-pt:'账本'
+application-label-pt-BR:'账本'
+application-label-pt-PT:'账本'
+application-label-ro:'账本'
+application-label-ru:'账本'
+application-label-si:'账本'
+application-label-sk:'账本'
+application-label-sl:'账本'
+application-label-sq:'账本'
+application-label-sr:'账本'
+application-label-sr-Latn:'账本'
+application-label-sv:'账本'
+application-label-sw:'账本'
+application-label-ta:'账本'
+application-label-te:'账本'
+application-label-th:'账本'
+application-label-tl:'账本'
+application-label-tr:'账本'
+application-label-uk:'账本'
+application-label-ur:'账本'
+application-label-uz:'账本'
+application-label-vi:'账本'
+application-label-zh-CN:'账本'
+application-label-zh-HK:'账本'
+application-label-zh-TW:'账本'
+application-label-zu:'账本'
+application-icon-120:'res/mipmap-anydpi-v26/ic_launcher.xml'
+application-icon-160:'res/mipmap-anydpi-v26/ic_launcher.xml'
+application-icon-240:'res/mipmap-anydpi-v26/ic_launcher.xml'
+application-icon-320:'res/mipmap-anydpi-v26/ic_launcher.xml'
+application-icon-480:'res/mipmap-anydpi-v26/ic_launcher.xml'
+application-icon-640:'res/mipmap-anydpi-v26/ic_launcher.xml'
+application-icon-65534:'res/mipmap-anydpi-v26/ic_launcher.xml'
+application: label='账本' icon='res/mipmap-anydpi-v26/ic_launcher.xml'
+application-debuggable
+launchable-activity: name='com.ledger.app.MainActivity'  label='' icon=''
+feature-group: label=''
+  uses-feature: name='android.hardware.faketouch'
+  uses-implied-feature: name='android.hardware.faketouch' reason='default feature for all apps'
+main
+other-receivers
+other-services
+supports-screens: 'small' 'normal' 'large' 'xlarge'
+supports-any-density: 'true'
+locales: '--_--' 'af' 'am' 'ar' 'as' 'az' 'be' 'bg' 'bn' 'bs' 'ca' 'cs' 'da' 'de' 'el' 'en-AU' 'en-CA' 'en-GB' 'en-IN' 'en-XC' 'es' 'es-US' 'et' 'eu' 'fa' 'fi' 'fr' 'fr-CA' 'gl' 'gu' 'hi' 'hr' 'hu' 'hy' 'in' 'is' 'it' 'iw' 'ja' 'ka' 'kk' 'km' 'kn' 'ko' 'ky' 'lo' 'lt' 'lv' 'mk' 'ml' 'mn' 'mr' 'ms' 'my' 'nb' 'ne' 'nl' 'or' 'pa' 'pl' 'pt' 'pt-BR' 'pt-PT' 'ro' 'ru' 'si' 'sk' 'sl' 'sq' 'sr' 'sr-Latn' 'sv' 'sw' 'ta' 'te' 'th' 'tl' 'tr' 'uk' 'ur' 'uz' 'vi' 'zh-CN' 'zh-HK' 'zh-TW' 'zu'
+densities: '120' '160' '240' '320' '480' '640' '65534'
+native-code: 'arm64-v8a' 'armeabi-v7a' 'x86' 'x86_64'
+
+===== ledger.apk (11083274 bytes) =====
+package: name='com.ledger.app' versionCode='3' versionName='1.2' platformBuildVersionName='15' platformBuildVersionCode='35' compileSdkVersion='35' compileSdkVersionCodename='15'
+sdkVersion:'26'
+targetSdkVersion:'35'
+uses-permission: name='android.permission.QUERY_ALL_PACKAGES'
+uses-permission: name='com.ledger.app.DYNAMIC_RECEIVER_NOT_EXPORTED_PERMISSION'
+application-label:'账本'
+application-label-af:'账本'
+application-label-am:'账本'
+application-label-ar:'账本'
+application-label-as:'账本'
+application-label-az:'账本'
+application-label-be:'账本'
+application-label-bg:'账本'
+application-label-bn:'账本'
+application-label-bs:'账本'
+application-label-ca:'账本'
+application-label-cs:'账本'
+application-label-da:'账本'
+application-label-de:'账本'
+application-label-el:'账本'
+application-label-en-AU:'账本'
+application-label-en-CA:'账本'
+application-label-en-GB:'账本'
+application-label-en-IN:'账本'
+application-label-en-XC:'账本'
+application-label-es:'账本'
+application-label-es-US:'账本'
+application-label-et:'账本'
+application-label-eu:'账本'
+application-label-fa:'账本'
+application-label-fi:'账本'
+application-label-fr:'账本'
+application-label-fr-CA:'账本'
+application-label-gl:'账本'
+application-label-gu:'账本'
+application-label-hi:'账本'
+application-label-hr:'账本'
+application-label-hu:'账本'
+application-label-hy:'账本'
+application-label-in:'账本'
+application-label-is:'账本'
+application-label-it:'账本'
+application-label-iw:'账本'
+application-label-ja:'账本'
+application-label-ka:'账本'
+application-label-kk:'账本'
+application-label-km:'账本'
+application-label-kn:'账本'
+application-label-ko:'账本'
+application-label-ky:'账本'
+application-label-lo:'账本'
+application-label-lt:'账本'
+application-label-lv:'账本'
+application-label-mk:'账本'
+application-label-ml:'账本'
+application-label-mn:'账本'
+application-label-mr:'账本'
+application-label-ms:'账本'
+application-label-my:'账本'
+application-label-nb:'账本'
+application-label-ne:'账本'
+application-label-nl:'账本'
+application-label-or:'账本'
+application-label-pa:'账本'
+application-label-pl:'账本'
+application-label-pt:'账本'
+application-label-pt-BR:'账本'
+application-label-pt-PT:'账本'
+application-label-ro:'账本'
+application-label-ru:'账本'
+application-label-si:'账本'
+application-label-sk:'账本'
+application-label-sl:'账本'
+application-label-sq:'账本'
+application-label-sr:'账本'
+application-label-sr-Latn:'账本'
+application-label-sv:'账本'
+application-label-sw:'账本'
+application-label-ta:'账本'
+application-label-te:'账本'
+application-label-th:'账本'
+application-label-tl:'账本'
+application-label-tr:'账本'
+application-label-uk:'账本'
+application-label-ur:'账本'
+application-label-uz:'账本'
+application-label-vi:'账本'
+application-label-zh-CN:'账本'
+application-label-zh-HK:'账本'
+application-label-zh-TW:'账本'
+application-label-zu:'账本'
+application-icon-120:'res/BW.xml'
+application-icon-160:'res/BW.xml'
+application-icon-240:'res/BW.xml'
+application-icon-320:'res/BW.xml'
+application-icon-480:'res/BW.xml'
+application-icon-640:'res/BW.xml'
+application-icon-65534:'res/BW.xml'
+application: label='账本' icon='res/BW.xml'
+launchable-activity: name='com.ledger.app.MainActivity'  label='' icon=''
+feature-group: label=''
+  uses-feature: name='android.hardware.faketouch'
+  uses-implied-feature: name='android.hardware.faketouch' reason='default feature for all apps'
+main
+other-receivers
+other-services
+supports-screens: 'small' 'normal' 'large' 'xlarge'
+supports-any-density: 'true'
+locales: '--_--' 'af' 'am' 'ar' 'as' 'az' 'be' 'bg' 'bn' 'bs' 'ca' 'cs' 'da' 'de' 'el' 'en-AU' 'en-CA' 'en-GB' 'en-IN' 'en-XC' 'es' 'es-US' 'et' 'eu' 'fa' 'fi' 'fr' 'fr-CA' 'gl' 'gu' 'hi' 'hr' 'hu' 'hy' 'in' 'is' 'it' 'iw' 'ja' 'ka' 'kk' 'km' 'kn' 'ko' 'ky' 'lo' 'lt' 'lv' 'mk' 'ml' 'mn' 'mr' 'ms' 'my' 'nb' 'ne' 'nl' 'or' 'pa' 'pl' 'pt' 'pt-BR' 'pt-PT' 'ro' 'ru' 'si' 'sk' 'sl' 'sq' 'sr' 'sr-Latn' 'sv' 'sw' 'ta' 'te' 'th' 'tl' 'tr' 'uk' 'ur' 'uz' 'vi' 'zh-CN' 'zh-HK' 'zh-TW' 'zu'
+densities: '120' '160' '240' '320' '480' '640' '65534'
+native-code: 'arm64-v8a' 'armeabi-v7a' 'x86' 'x86_64'
+
+===== apksigner verify ledger.apk =====
+Verifies
+Verified using v1 scheme (JAR signing): false
+Verified using v2 scheme (APK Signature Scheme v2): true
+Verified using v3 scheme (APK Signature Scheme v3): false
+Verified using v3.1 scheme (APK Signature Scheme v3.1): false
+Verified using v4 scheme (APK Signature Scheme v4): false
+Verified for SourceStamp: false
+Number of signers: 1
+Signer #1 certificate DN: CN=Ledger, OU=Personal, O=Ledger, L=Local, C=CN
+Signer #1 certificate SHA-256 digest: df55d71cc8021a9aae6c11f04a7a961141f2ff341b41c6929b1a25bb8ad8fbbe
+Signer #1 certificate SHA-1 digest: d5bc94f176189c12382cc8646e31ae54f6f82a86
+Signer #1 certificate MD5 digest: 497ad7557eac263c6833c6bbef81ef62
+Signer #1 key algorithm: RSA
+Signer #1 key size (bits): 2048
+Signer #1 public key SHA-256 digest: 53ef53bb741e722e9ee143f4d345fbc8dfc6df30bf76c8b1115a63b683d34ce7
+Signer #1 public key SHA-1 digest: 189cbbfd7336973339c0ef0282d2b77a24f9e256
+Signer #1 public key MD5 digest: e41e6e1a47234f9fcd46161628673bbb
+
+===== 第二轮 PDF 支持检查（回归） =====
+--- Application 类（aapt dump xmltree AndroidManifest.xml）---
+    E: application (line=19)
+--- pdfbox-android 资源（glyphlist / cmap）---
+274452 assets/com/tom_roush/fontbox/resources/cmap/UniGB-UCS2-H
+78111 assets/com/tom_roush/pdfbox/resources/glyphlist/glyphlist.txt
+410712 assets/com/tom_roush/pdfbox/resources/ttf/LiberationSans-Regular.ttf
+--- dex 中的关键类 ---
+Lcom/tom_roush/pdfbox/pdmodel/PDDocument; -> found
+Lcom/tom_roush/pdfbox/text/PDFTextStripper; -> found
+Lcom/tom_roush/pdfbox/android/PDFBoxResourceLoader; -> found
+Lcom/ledger/app/LedgerApp; -> found
+Lcom/ledger/app/csv/BillImporter; -> found
+Lcom/ledger/app/csv/PdfBillParser; -> found
+Lcom/ledger/app/csv/BillParser; -> found
+
+===== 第三轮 UI 重做检查（ledger.apk；release 包资源路径已被 AGP 缩短，故按资源名查询）=====
+--- Manifest 中的 icon / roundIcon ---
+      A: android:icon(0x01010002)=@0x7f080000
+      A: android:roundIcon(0x0101052c)=@0x7f080001
+--- 资源表：自适应图标与三层 drawable（aapt2 dump resources）---
+    resource 0x7f040007 drawable/ic_launcher_background
+      () (file) res/0w.xml type=XML
+    resource 0x7f040008 drawable/ic_launcher_foreground
+      () (file) res/Qr.xml type=XML
+    resource 0x7f040009 drawable/ic_launcher_monochrome
+      () (file) res/Vy.xml type=XML
+    resource 0x7f080000 mipmap/ic_launcher
+      (anydpi) (file) res/BW.xml type=XML
+    resource 0x7f080001 mipmap/ic_launcher_round
+      (anydpi) (file) res/0K.xml type=XML
+--- application icon 实际文件 res/BW.xml 的内容（adaptive-icon：background / foreground / monochrome）---
+N: android=http://schemas.android.com/apk/res/android
+  E: adaptive-icon (line=2)
+    E: background (line=3)
+      A: android:drawable(0x01010199)=@0x7f040007
+    E: foreground (line=4)
+      A: android:drawable(0x01010199)=@0x7f040008
+    E: monochrome (line=5)
+      A: android:drawable(0x01010199)=@0x7f040009
+--- 旧默认图标 drawable/ic_launcher 是否仍存在 ---
+已移除
+--- Theme.Ledger 四套配置（默认 / night / v31 / night-v31）---
+    属性对照：0x01010054=windowBackground 0x01010451=statusBarColor 0x01010452=navigationBarColor（@0x0106000d=transparent）
+              0x010104e0=windowLightStatusBar 0x0101056c=windowLightNavigationBar
+              0x0101062c=windowSplashScreenBackground 0x0101062d=windowSplashScreenAnimatedIcon
+    resource 0x7f0a000a style/Theme.Ledger
+      () (style) size=7 parent=0x01030241
+        0x01010054=@color/bg_light
+        0x01010433=@color/brand_emerald
+        0x01010435=@color/brand_emerald
+        0x01010451=@0x0106000d
+        0x01010452=@0x0106000d
+        0x010104e0=true
+        0x0101056c=true
+      (night) (style) size=7 parent=0x0103022e
+        0x01010054=@color/bg_dark
+        0x01010433=@color/brand_emerald
+        0x01010435=@color/brand_emerald
+        0x01010451=@0x0106000d
+        0x01010452=@0x0106000d
+        0x010104e0=false
+        0x0101056c=false
+      (v31) (style) size=9 parent=0x01030241
+        0x01010054=@color/bg_light
+        0x01010433=@color/brand_emerald
+        0x01010435=@color/brand_emerald
+        0x01010451=@0x0106000d
+        0x01010452=@0x0106000d
+        0x010104e0=true
+        0x0101056c=true
+        0x0101062c=@color/bg_light
+        0x0101062d=@mipmap/ic_launcher
+      (night-v31) (style) size=9 parent=0x0103022e
+        0x01010054=@color/bg_dark
+        0x01010433=@color/brand_emerald
+        0x01010435=@color/brand_emerald
+        0x01010451=@0x0106000d
+        0x01010452=@0x0106000d
+        0x010104e0=false
+        0x0101056c=false
+        0x0101062c=@color/bg_dark
+        0x0101062d=@mipmap/ic_launcher
+--- 品牌色资源 ---
+    resource 0x7f020002 color/bg_dark
+      () #ff101413
+    resource 0x7f020003 color/bg_light
+      () #fff6f7f4
+    resource 0x7f020004 color/brand_emerald
+      () #ff0e7c5a
+    resource 0x7f020005 color/brand_emerald_deep
+      () #ff0a5c43
+--- dex 中的第三轮新增 UI 类 ---
+Lcom/ledger/app/ui/LedgerIcons; -> found
+Lcom/ledger/app/ui/LedgerPalette; -> found
+Lcom/ledger/app/ui/HomeScreenKt; -> found
+Lcom/ledger/app/ui/CommonKt; -> found
+Lcom/ledger/app/ui/NavTab; -> found
+--- 源码中动态取色调用（应为 0）---
+dynamicLightColorScheme/dynamicDarkColorScheme 出现次数: 0
+--- 单元测试结果（app/build/test-results/testDebugUnitTest）---
+<testsuite name="com.ledger.app.BillParserTest" tests="7" skipped="0" failures="0" errors="0" timestamp="2026-11-05T07:28:32"
+<testsuite name="com.ledger.app.PdfBillParserTest" tests="9" skipped="0" failures="0" errors="0" timestamp="2026-11-05T07:28:32"

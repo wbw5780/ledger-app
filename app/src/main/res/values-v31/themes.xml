@@ -1,0 +1,14 @@
+<resources>
+    <!-- Android 12+ 系统启动画面：主题背景色 + 自适应图标（自动取 @mipmap/ic_launcher） -->
+    <style name="Theme.Ledger" parent="android:Theme.Material.Light.NoActionBar">
+        <item name="android:statusBarColor">@android:color/transparent</item>
+        <item name="android:navigationBarColor">@android:color/transparent</item>
+        <item name="android:windowLightStatusBar">true</item>
+        <item name="android:windowLightNavigationBar">true</item>
+        <item name="android:windowBackground">@color/bg_light</item>
+        <item name="android:colorAccent">@color/brand_emerald</item>
+        <item name="android:colorPrimary">@color/brand_emerald</item>
+        <item name="android:windowSplashScreenBackground">@color/bg_light</item>
+        <item name="android:windowSplashScreenAnimatedIcon">@mipmap/ic_launcher</item>
+    </style>
+</resources>
