@@ -222,7 +222,7 @@ M001
         assertNotNull(r3.error)
 
         // PDF 提取抛异常（损坏/加密）→ 返回错误，不崩
-        val r4 = BillImporter.parse("%PDF-1.4 broken".toByteArray(), null) { throw IllegalStateException("boom") }
+        val r4 = BillImporter.parse("%PDF-1.4 broken".toByteArray(), null, pdfPages = { throw IllegalStateException("boom") })
         assertNotNull(r4.error)
         assertTrue(PdfBillParser.isPdf("﻿%PDF-1.4".toByteArray()))
         assertFalse(PdfBillParser.isPdf("%PD".toByteArray()))
@@ -314,7 +314,8 @@ M001
     fun realPdfEndToEnd() {
         val pdf = buildPdf()
         assumeTrue("系统无 CJK TrueType 字体，跳过", pdf != null)
-        val r = BillImporter.parse(pdf!!, "微信支付账单(20240301-20240331).pdf", ::desktopExtract)
+        // 坐标提取返回空 → 强制走旧的纯文本启发式兜底路径
+        val r = BillImporter.parse(pdf!!, "微信支付账单(20240301-20240331).pdf", ::desktopExtract, pdfWords = { emptyList() })
         assertNull(r.error)
         assertEquals(BillParser.WECHAT, r.source)
         assertEquals(2, r.rows.size)

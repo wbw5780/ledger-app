@@ -1,6 +1,6 @@
 # 构建结果
 
-**状态：全部交付物完成，构建成功。**（当前最新为第五轮 v1.4 黑白配色，见文末「第五轮 黑白配色」）
+**状态：全部交付物完成，构建成功。**（当前最新为第六轮 v1.5 微信 PDF 电子凭证解析修复，见文末「第六轮 微信 PDF 解析修复」）
 
 | # | 交付物 | 结果 |
 |---|---|---|
@@ -265,3 +265,58 @@ Signer #1 certificate DN: CN=Ledger, OU=Personal, O=Ledger, L=Local, C=CN
 
 - 和前几轮一样，没有在真机或模拟器上看过实际效果，以编译、单元测试和 aapt 资源核验为准。灰阶的层次（例如 `#F4F4F4` 背景与白卡片、`#0B0B0B` 与 `#171717`）是按 SPEC 取值的，实机观感可能还需要微调。
 - Material3 内置组件（DatePicker、TimePicker、AlertDialog、进度条等）的颜色来自 colorScheme，已全部换成灰阶，但同样没有截图核对。
+
+
+## 第六轮 微信 PDF 解析修复
+
+**状态：完成。** `./gradlew :app:testDebugUnitTest :app:assembleDebug :app:assembleRelease` 全部 BUILD SUCCESSFUL。
+
+| 项 | 结果 |
+|---|---|
+| 版本 | versionCode 5→6，versionName 1.4→1.5；仍用 `app/release.keystore` 签名，证书 SHA-256 `df55d71c…8fbbe` 不变，可在 App 内从 1.4 直接更新 |
+| `ledger.apk`（release） | 11116706 字节，SHA-256 `fc64fe88…ee11200`，apksigner v2 校验通过 |
+| `ledger-debug.apk` | 14205563 字节 |
+| 单元测试 | 29 个全部通过、0 跳过（BillParserTest 7 + PdfBillParserTest 9 + UpdateCheckerTest 6 + 新增 PdfTableParserTest 7）。CSV/支付宝解析 `BillParser.kt` 与旧启发式 `PdfBillParser.kt` 零改动 |
+| 真实样本核对 | `/root/wechat-sample.pdf`（3 页，「微信支付交易电子凭证」）走 App 实际链路（pdfbox-android + BillImporter）解析出 **28 笔，跳过 0**。另用 poppler `pdftotext -layout`（另一套 PDF 引擎）独立解析同一份文件，逐笔比较 交易时间 / 收支 / 金额 / 完整交易单号，**28/28 全部一致**，28 个单号互不重复（31 位 25 个，32 位 3 个）。逐笔明细和比对结论在 `/root/ledger-app/pdf-parse-check.txt`。该文件含真实交易数据，只保存在本机，已加入 `.gitignore`，不进 git，也不进源码包 |
+| 修复前对照 | 同一份样本用旧启发式解析只得到 1 笔，而且是错的：时间取成了「申请时间」，单号只有 10 位，对方和商品是表头与申请方信息拼成的乱文本。对照结果也记录在 pdf-parse-check.txt 里 |
+| apk-verify.txt | 重新生成：两个 APK 的 badging、apksigner、versionCode 6/1.5；dex 中存在 PdfTableParser / PdfWord / PdfTextExtractor$WordStripper / TextPosition，旧 PdfBillParser、BillParser、UpdateChecker 也在；新提示语字符串；确认 APK 和 git 中都没有真实样本；真实样本的核对结论（只记笔数和一致性，不记金额）；单元测试结果 |
+
+### 改动
+
+- **`csv/PdfTextExtractor`**：新增 `extractWords`。内部用 `PDFTextStripper` 的子类 `WordStripper` 重写 `writeString(String, List<TextPosition>)`，按空白切词，每个词记录 x / endX / 基线 y / 字高（`PdfWord`）。原 `extractPages` 保留，供兜底使用。
+- **`csv/PdfTableParser`**（新增，纯 Kotlin）：按坐标解析表格，算法见 README「微信 PDF 解析」一节：
+  - 表头定位列边界。
+  - 按基线聚簇成视觉行。
+  - 「交易时间列出现日期」的行开始一笔交易，后续折行归入同一笔，可以跨页。
+  - 合计行、表尾说明、间距过大的行会结束当前交易，且本身不并入任何一笔。
+  - 每笔交易按列拼接片段，单号是 3 段数字直接拼接。
+  - 收支类型不是收入/支出的整笔丢弃。
+  - 字段对应：对方 = 交易对方，商品 = 交易类型 + 交易方式，备注 = 当前状态 + 收/付款说明，status = 当前状态；商户单号不使用。
+  - 也兼容「个人对账」版式的表头：有「商品」列时，商品和备注按 CSV 的含义取。
+- **`csv/BillImporter`**：PDF 先走 `extractWords` + `PdfTableParser`。找不到表头（返回 null）或坐标提取异常时，才退回 `extractPages` + 旧 `PdfBillParser`。兜底也没有识别出交易时，返回「无法识别的账单格式：…」，不导入任何数据。新增可注入参数 `pdfWords`（用于测试）。
+- **测试**：
+  - 新增 `PdfTableParserTest`：
+    - 脱敏 fixture 逐笔比对 28 笔（时间、收支、金额、完整单号），并核对对方、商品、备注字段，确认商户单号没有混入。
+    - BillImporter 在有表头时不走旧启发式。
+    - 人为把一笔交易拆到两页，仍能续接。
+    - 表尾合计行被忽略。
+    - 收支类型为「/」时整笔跳过。
+    - 无表头时退回旧启发式，仍识别不出就报「无法识别的账单格式」。
+    - 真实样本端到端：只在本机存在样本时运行，否则 assume 跳过；运行时写出 pdf-parse-check.txt。
+  - `PdfBillParserTest` 改了两处调用方式：r4 改用命名参数 `pdfPages =`；合成 PDF 的桌面版 PDFBox 用例传 `pdfWords = { emptyList() }`，强制走旧兜底路径，这样兜底仍有端到端覆盖。断言没有改。另一个用 pdfbox-android 的合成 PDF 用例现在走新的坐标路径，原断言照样通过。
+  - fixture：`app/src/test/resources/wechat-voucher-sample.txt`（坐标词）和 `wechat-voucher-sample.expected.tsv`（期望值）。脱敏方式：姓名、微信号、交易对方换成测试名；银行名换成「示例银行」；金额、单号、商户单号、卡号尾号、编号的数字统一做同一个随机置换（0 不变，所以位数和结构不变）；日期整体平移一年；时间、版式和坐标保持原样。期望值由 pdftotext 独立解析真实样本后，用同样的方式脱敏生成。脱敏脚本含置换表，没有放进仓库。
+- **`.gitignore`**：新增 `sample-wechat.pdf`、`wechat-sample.pdf`、`*.pdf`（`app/src/test/resources/**/*.pdf` 例外）、`pdf-parse-check.txt`。
+- **README**：PDF 解析一节改写为坐标分列算法和兜底说明，已知限制也已更新。
+
+### 与 SPEC 不同 / 需要说明的地方
+
+- **列边界不用表头 X 起点，改用相邻表头之间空隙的中点，并按词的中心归列。** 真实样本中，日期 `2026-11-05` 的 x=113.0，而表头「交易时间」的 x=115.0；商户单号 x=507.3，表头「商户单号」x=509.3，但「收/付款说明」表头结束于 505.8。表头是居中的，数据比表头宽，如果按「X 起点」划界，日期和商户单号都会分错列。
+- **交易起始只要求「交易时间列出现日期」**。SPEC 写的是「单号列有新数字且时间列有日期」，样本中这两个条件总是同时成立；只看日期更宽松，单号缺失时不会把两笔交易并成一笔，此时用哈希作为去重键。
+- **发现并处理了一处隐私泄漏**：上一轮提交 `cf16ac7` 把用户放在仓库目录里的真实样本 `sample-wechat.pdf` 一起提交并推送到了公开仓库（原因是用了 `git add` 整目录，`.gitignore` 没有排除它）。本轮一开始就把它从该提交中移除（`git commit --amend`），并用 `--force-with-lease` 推送，`main` 从 `cf16ac7` 变为 `a0bb484`，内容只少了这个 PDF。tag 4/5 指向更早的提交，不含该文件。旧的 `/root/ledger-app-source.zip` 也包含它，本轮已重新生成。**残留风险**：被覆盖的提交 `cf16ac7` 在 GitHub 上仍可能通过 SHA 直接访问，直到 GitHub 做垃圾回收；也可能已被他人克隆或缓存。如需彻底清除，要联系 GitHub Support 申请清除缓存视图。本地保留了备份分支 `backup-cf16ac7-with-sample`（不推送），确认不需要后可以 `git branch -D` 删除。
+
+### 本轮已知限制
+
+- 只有一份真实样本：交易电子凭证，全部是「转账」，3 笔银行卡支出，其余为收入。其他交易类型（如二维码收付款、长对方名、长收付款说明的折行）没有真实样本可以核对。这些情况按列拼接的逻辑同样适用，但没有经过验证。
+- 交易时间按手机时区解析。凭证上标注的是北京时间，手机时区不是 UTC+8 时，时间会有偏移，这一点与 CSV 导入的行为一致。
+- 仍未在真机或模拟器上导入过。JVM 测试走的是 pdfbox-android 的 classpath 资源回退路径，提取链路与 App 中使用的是同一套代码。
+
