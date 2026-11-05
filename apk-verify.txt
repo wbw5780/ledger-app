@@ -1,5 +1,5 @@
-===== ledger-debug.apk (14206860 bytes) =====
-package: name='com.ledger.app' versionCode='4' versionName='1.3' platformBuildVersionName='15' platformBuildVersionCode='35' compileSdkVersion='35' compileSdkVersionCodename='15'
+===== ledger-debug.apk (14189179 bytes) =====
+package: name='com.ledger.app' versionCode='5' versionName='1.4' platformBuildVersionName='15' platformBuildVersionCode='35' compileSdkVersion='35' compileSdkVersionCodename='15'
 sdkVersion:'26'
 targetSdkVersion:'35'
 uses-permission: name='android.permission.INTERNET'
@@ -7,91 +7,6 @@ uses-permission: name='android.permission.REQUEST_INSTALL_PACKAGES'
 uses-permission: name='android.permission.QUERY_ALL_PACKAGES'
 uses-permission: name='com.ledger.app.DYNAMIC_RECEIVER_NOT_EXPORTED_PERMISSION'
 application-label:'账本'
-application-label-af:'账本'
-application-label-am:'账本'
-application-label-ar:'账本'
-application-label-as:'账本'
-application-label-az:'账本'
-application-label-be:'账本'
-application-label-bg:'账本'
-application-label-bn:'账本'
-application-label-bs:'账本'
-application-label-ca:'账本'
-application-label-cs:'账本'
-application-label-da:'账本'
-application-label-de:'账本'
-application-label-el:'账本'
-application-label-en-AU:'账本'
-application-label-en-CA:'账本'
-application-label-en-GB:'账本'
-application-label-en-IN:'账本'
-application-label-en-XC:'账本'
-application-label-es:'账本'
-application-label-es-US:'账本'
-application-label-et:'账本'
-application-label-eu:'账本'
-application-label-fa:'账本'
-application-label-fi:'账本'
-application-label-fr:'账本'
-application-label-fr-CA:'账本'
-application-label-gl:'账本'
-application-label-gu:'账本'
-application-label-hi:'账本'
-application-label-hr:'账本'
-application-label-hu:'账本'
-application-label-hy:'账本'
-application-label-in:'账本'
-application-label-is:'账本'
-application-label-it:'账本'
-application-label-iw:'账本'
-application-label-ja:'账本'
-application-label-ka:'账本'
-application-label-kk:'账本'
-application-label-km:'账本'
-application-label-kn:'账本'
-application-label-ko:'账本'
-application-label-ky:'账本'
-application-label-lo:'账本'
-application-label-lt:'账本'
-application-label-lv:'账本'
-application-label-mk:'账本'
-application-label-ml:'账本'
-application-label-mn:'账本'
-application-label-mr:'账本'
-application-label-ms:'账本'
-application-label-my:'账本'
-application-label-nb:'账本'
-application-label-ne:'账本'
-application-label-nl:'账本'
-application-label-or:'账本'
-application-label-pa:'账本'
-application-label-pl:'账本'
-application-label-pt:'账本'
-application-label-pt-BR:'账本'
-application-label-pt-PT:'账本'
-application-label-ro:'账本'
-application-label-ru:'账本'
-application-label-si:'账本'
-application-label-sk:'账本'
-application-label-sl:'账本'
-application-label-sq:'账本'
-application-label-sr:'账本'
-application-label-sr-Latn:'账本'
-application-label-sv:'账本'
-application-label-sw:'账本'
-application-label-ta:'账本'
-application-label-te:'账本'
-application-label-th:'账本'
-application-label-tl:'账本'
-application-label-tr:'账本'
-application-label-uk:'账本'
-application-label-ur:'账本'
-application-label-uz:'账本'
-application-label-vi:'账本'
-application-label-zh-CN:'账本'
-application-label-zh-HK:'账本'
-application-label-zh-TW:'账本'
-application-label-zu:'账本'
 application-icon-120:'res/mipmap-anydpi-v26/ic_launcher.xml'
 application-icon-160:'res/mipmap-anydpi-v26/ic_launcher.xml'
 application-icon-240:'res/mipmap-anydpi-v26/ic_launcher.xml'
@@ -110,12 +25,10 @@ other-receivers
 other-services
 supports-screens: 'small' 'normal' 'large' 'xlarge'
 supports-any-density: 'true'
-locales: '--_--' 'af' 'am' 'ar' 'as' 'az' 'be' 'bg' 'bn' 'bs' 'ca' 'cs' 'da' 'de' 'el' 'en-AU' 'en-CA' 'en-GB' 'en-IN' 'en-XC' 'es' 'es-US' 'et' 'eu' 'fa' 'fi' 'fr' 'fr-CA' 'gl' 'gu' 'hi' 'hr' 'hu' 'hy' 'in' 'is' 'it' 'iw' 'ja' 'ka' 'kk' 'km' 'kn' 'ko' 'ky' 'lo' 'lt' 'lv' 'mk' 'ml' 'mn' 'mr' 'ms' 'my' 'nb' 'ne' 'nl' 'or' 'pa' 'pl' 'pt' 'pt-BR' 'pt-PT' 'ro' 'ru' 'si' 'sk' 'sl' 'sq' 'sr' 'sr-Latn' 'sv' 'sw' 'ta' 'te' 'th' 'tl' 'tr' 'uk' 'ur' 'uz' 'vi' 'zh-CN' 'zh-HK' 'zh-TW' 'zu'
-densities: '120' '160' '240' '320' '480' '640' '65534'
 native-code: 'arm64-v8a' 'armeabi-v7a' 'x86' 'x86_64'
 
-===== ledger.apk (11116658 bytes) =====
-package: name='com.ledger.app' versionCode='4' versionName='1.3' platformBuildVersionName='15' platformBuildVersionCode='35' compileSdkVersion='35' compileSdkVersionCodename='15'
+===== ledger.apk (11100322 bytes) =====
+package: name='com.ledger.app' versionCode='5' versionName='1.4' platformBuildVersionName='15' platformBuildVersionCode='35' compileSdkVersion='35' compileSdkVersionCodename='15'
 sdkVersion:'26'
 targetSdkVersion:'35'
 uses-permission: name='android.permission.INTERNET'
@@ -123,91 +36,6 @@ uses-permission: name='android.permission.REQUEST_INSTALL_PACKAGES'
 uses-permission: name='android.permission.QUERY_ALL_PACKAGES'
 uses-permission: name='com.ledger.app.DYNAMIC_RECEIVER_NOT_EXPORTED_PERMISSION'
 application-label:'账本'
-application-label-af:'账本'
-application-label-am:'账本'
-application-label-ar:'账本'
-application-label-as:'账本'
-application-label-az:'账本'
-application-label-be:'账本'
-application-label-bg:'账本'
-application-label-bn:'账本'
-application-label-bs:'账本'
-application-label-ca:'账本'
-application-label-cs:'账本'
-application-label-da:'账本'
-application-label-de:'账本'
-application-label-el:'账本'
-application-label-en-AU:'账本'
-application-label-en-CA:'账本'
-application-label-en-GB:'账本'
-application-label-en-IN:'账本'
-application-label-en-XC:'账本'
-application-label-es:'账本'
-application-label-es-US:'账本'
-application-label-et:'账本'
-application-label-eu:'账本'
-application-label-fa:'账本'
-application-label-fi:'账本'
-application-label-fr:'账本'
-application-label-fr-CA:'账本'
-application-label-gl:'账本'
-application-label-gu:'账本'
-application-label-hi:'账本'
-application-label-hr:'账本'
-application-label-hu:'账本'
-application-label-hy:'账本'
-application-label-in:'账本'
-application-label-is:'账本'
-application-label-it:'账本'
-application-label-iw:'账本'
-application-label-ja:'账本'
-application-label-ka:'账本'
-application-label-kk:'账本'
-application-label-km:'账本'
-application-label-kn:'账本'
-application-label-ko:'账本'
-application-label-ky:'账本'
-application-label-lo:'账本'
-application-label-lt:'账本'
-application-label-lv:'账本'
-application-label-mk:'账本'
-application-label-ml:'账本'
-application-label-mn:'账本'
-application-label-mr:'账本'
-application-label-ms:'账本'
-application-label-my:'账本'
-application-label-nb:'账本'
-application-label-ne:'账本'
-application-label-nl:'账本'
-application-label-or:'账本'
-application-label-pa:'账本'
-application-label-pl:'账本'
-application-label-pt:'账本'
-application-label-pt-BR:'账本'
-application-label-pt-PT:'账本'
-application-label-ro:'账本'
-application-label-ru:'账本'
-application-label-si:'账本'
-application-label-sk:'账本'
-application-label-sl:'账本'
-application-label-sq:'账本'
-application-label-sr:'账本'
-application-label-sr-Latn:'账本'
-application-label-sv:'账本'
-application-label-sw:'账本'
-application-label-ta:'账本'
-application-label-te:'账本'
-application-label-th:'账本'
-application-label-tl:'账本'
-application-label-tr:'账本'
-application-label-uk:'账本'
-application-label-ur:'账本'
-application-label-uz:'账本'
-application-label-vi:'账本'
-application-label-zh-CN:'账本'
-application-label-zh-HK:'账本'
-application-label-zh-TW:'账本'
-application-label-zu:'账本'
 application-icon-120:'res/BW.xml'
 application-icon-160:'res/BW.xml'
 application-icon-240:'res/BW.xml'
@@ -225,8 +53,6 @@ other-receivers
 other-services
 supports-screens: 'small' 'normal' 'large' 'xlarge'
 supports-any-density: 'true'
-locales: '--_--' 'af' 'am' 'ar' 'as' 'az' 'be' 'bg' 'bn' 'bs' 'ca' 'cs' 'da' 'de' 'el' 'en-AU' 'en-CA' 'en-GB' 'en-IN' 'en-XC' 'es' 'es-US' 'et' 'eu' 'fa' 'fi' 'fr' 'fr-CA' 'gl' 'gu' 'hi' 'hr' 'hu' 'hy' 'in' 'is' 'it' 'iw' 'ja' 'ka' 'kk' 'km' 'kn' 'ko' 'ky' 'lo' 'lt' 'lv' 'mk' 'ml' 'mn' 'mr' 'ms' 'my' 'nb' 'ne' 'nl' 'or' 'pa' 'pl' 'pt' 'pt-BR' 'pt-PT' 'ro' 'ru' 'si' 'sk' 'sl' 'sq' 'sr' 'sr-Latn' 'sv' 'sw' 'ta' 'te' 'th' 'tl' 'tr' 'uk' 'ur' 'uz' 'vi' 'zh-CN' 'zh-HK' 'zh-TW' 'zu'
-densities: '120' '160' '240' '320' '480' '640' '65534'
 native-code: 'arm64-v8a' 'armeabi-v7a' 'x86' 'x86_64'
 
 ===== apksigner verify ledger.apk =====
@@ -248,73 +74,69 @@ Signer #1 public key SHA-256 digest: 53ef53bb741e722e9ee143f4d345fbc8dfc6df30bf7
 Signer #1 public key SHA-1 digest: 189cbbfd7336973339c0ef0282d2b77a24f9e256
 Signer #1 public key MD5 digest: e41e6e1a47234f9fcd46161628673bbb
 
-===== 第二轮 PDF 支持检查（回归） =====
---- Application 类（aapt dump xmltree AndroidManifest.xml）---
-    E: application (line=19)
---- pdfbox-android 资源（glyphlist / cmap）---
-274452 assets/com/tom_roush/fontbox/resources/cmap/UniGB-UCS2-H
-78111 assets/com/tom_roush/pdfbox/resources/glyphlist/glyphlist.txt
-410712 assets/com/tom_roush/pdfbox/resources/ttf/LiberationSans-Regular.ttf
---- dex 中的关键类 ---
-Lcom/tom_roush/pdfbox/pdmodel/PDDocument; -> found
-Lcom/tom_roush/pdfbox/text/PDFTextStripper; -> found
-Lcom/tom_roush/pdfbox/android/PDFBoxResourceLoader; -> found
-Lcom/ledger/app/LedgerApp; -> found
-Lcom/ledger/app/csv/BillImporter; -> found
-Lcom/ledger/app/csv/PdfBillParser; -> found
-Lcom/ledger/app/csv/BillParser; -> found
-
-===== 第三轮 UI 重做检查（ledger.apk；release 包资源路径已被 AGP 缩短，故按资源名查询）=====
---- Manifest 中的 icon / roundIcon ---
-      A: android:icon(0x01010002)=@0x7f080000
-      A: android:roundIcon(0x0101052c)=@0x7f080001
---- 资源表：自适应图标与三层 drawable（aapt2 dump resources）---
-    resource 0x7f040007 drawable/ic_launcher_background
-      () (file) res/0w.xml type=XML
-    resource 0x7f040008 drawable/ic_launcher_foreground
-      () (file) res/Qr.xml type=XML
-    resource 0x7f040009 drawable/ic_launcher_monochrome
-      () (file) res/Vy.xml type=XML
-    resource 0x7f080000 mipmap/ic_launcher
-      (anydpi) (file) res/BW.xml type=XML
-    resource 0x7f080001 mipmap/ic_launcher_round
-      (anydpi) (file) res/0K.xml type=XML
---- application icon 实际文件 res/BW.xml 的内容（adaptive-icon：background / foreground / monochrome）---
-N: android=http://schemas.android.com/apk/res/android
-  E: adaptive-icon (line=2)
-    E: background (line=3)
-      A: android:drawable(0x01010199)=@0x7f040007
-    E: foreground (line=4)
-      A: android:drawable(0x01010199)=@0x7f040008
-    E: monochrome (line=5)
-      A: android:drawable(0x01010199)=@0x7f040009
---- 旧默认图标 drawable/ic_launcher 是否仍存在 ---
-已移除
---- Theme.Ledger 四套配置（默认 / night / v31 / night-v31）---
-    属性对照：0x01010054=windowBackground 0x01010451=statusBarColor 0x01010452=navigationBarColor（@0x0106000d=transparent）
-              0x010104e0=windowLightStatusBar 0x0101056c=windowLightNavigationBar
-              0x0101062c=windowSplashScreenBackground 0x0101062d=windowSplashScreenAnimatedIcon
+===== 第五轮 黑白配色检查（ledger.apk；release 资源路径被 AGP 缩短，按资源名查询）=====
+--- versionCode / versionName（应为 5 / 1.4）---
+package: name='com.ledger.app' versionCode='5' versionName='1.4' platformBuildVersionName='15' platformBuildVersionCode='35' compileSdkVersion='35' compileSdkVersionCodename='15'
+--- 签名与上一版一致（证书 SHA-256 应为 df55d71c…8fbbe）---
+Signer #1 certificate SHA-256 digest: df55d71cc8021a9aae6c11f04a7a961141f2ff341b41c6929b1a25bb8ad8fbbe
+--- 品牌色资源（应为 bg_light #F4F4F4 / bg_dark #0B0B0B / brand_ink #111111 / brand_paper #F5F5F5，无 brand_emerald）---
+    resource 0x7f020002 color/bg_dark
+      () #ff0b0b0b
+    resource 0x7f020003 color/bg_light
+      () #fff4f4f4
+    resource 0x7f020004 color/brand_ink
+      () #ff111111
+    resource 0x7f020005 color/brand_paper
+      () #fff5f5f5
+--
+        0x01010054=@color/bg_light
+        0x01010433=@color/brand_ink
+        0x01010435=@color/brand_ink
+        0x01010451=@0x0106000d
+--
+        0x01010054=@color/bg_dark
+        0x01010433=@color/brand_paper
+        0x01010435=@color/brand_paper
+        0x01010451=@0x0106000d
+--
+        0x01010054=@color/bg_light
+        0x01010433=@color/brand_ink
+        0x01010435=@color/brand_ink
+        0x01010451=@0x0106000d
+--
+        0x0101062c=@color/bg_light
+        0x0101062d=@mipmap/ic_launcher
+--
+        0x01010054=@color/bg_dark
+        0x01010433=@color/brand_paper
+        0x01010435=@color/brand_paper
+        0x01010451=@0x0106000d
+--
+        0x0101062c=@color/bg_dark
+        0x0101062d=@mipmap/ic_launcher
+brand_emerald 出现次数：0
+--- Theme.Ledger（windowBackground 0x01010054 / colorAccent 0x01010433 / colorPrimary 0x01010435 / splash 背景 0x0101062c）---
     resource 0x7f0a000a style/Theme.Ledger
       () (style) size=7 parent=0x01030241
         0x01010054=@color/bg_light
-        0x01010433=@color/brand_emerald
-        0x01010435=@color/brand_emerald
+        0x01010433=@color/brand_ink
+        0x01010435=@color/brand_ink
         0x01010451=@0x0106000d
         0x01010452=@0x0106000d
         0x010104e0=true
         0x0101056c=true
       (night) (style) size=7 parent=0x0103022e
         0x01010054=@color/bg_dark
-        0x01010433=@color/brand_emerald
-        0x01010435=@color/brand_emerald
+        0x01010433=@color/brand_paper
+        0x01010435=@color/brand_paper
         0x01010451=@0x0106000d
         0x01010452=@0x0106000d
         0x010104e0=false
         0x0101056c=false
       (v31) (style) size=9 parent=0x01030241
         0x01010054=@color/bg_light
-        0x01010433=@color/brand_emerald
-        0x01010435=@color/brand_emerald
+        0x01010433=@color/brand_ink
+        0x01010435=@color/brand_ink
         0x01010451=@0x0106000d
         0x01010452=@0x0106000d
         0x010104e0=true
@@ -323,91 +145,68 @@ N: android=http://schemas.android.com/apk/res/android
         0x0101062d=@mipmap/ic_launcher
       (night-v31) (style) size=9 parent=0x0103022e
         0x01010054=@color/bg_dark
-        0x01010433=@color/brand_emerald
-        0x01010435=@color/brand_emerald
+        0x01010433=@color/brand_paper
+        0x01010435=@color/brand_paper
         0x01010451=@0x0106000d
         0x01010452=@0x0106000d
         0x010104e0=false
         0x0101056c=false
         0x0101062c=@color/bg_dark
         0x0101062d=@mipmap/ic_launcher
---- 品牌色资源 ---
-    resource 0x7f020002 color/bg_dark
-      () #ff101413
-    resource 0x7f020003 color/bg_light
-      () #fff6f7f4
-    resource 0x7f020004 color/brand_emerald
-      () #ff0e7c5a
-    resource 0x7f020005 color/brand_emerald_deep
-      () #ff0a5c43
---- dex 中的第三轮新增 UI 类 ---
-Lcom/ledger/app/ui/LedgerIcons; -> found
+--- drawable/ic_launcher_background（res/0w.xml）颜色属性 ---
+A: http://schemas.android.com/apk/res/android:fillColor(0x01010404)=@0x7f040000
+A: http://schemas.android.com/apk/res/android:pathData(0x01010405)="M0,0h108v108h-108z" (Raw: "M0,0h108v108h-108z")
+A: http://schemas.android.com/apk/res/android:fillColor(0x01010404)=#0fffffff
+A: http://schemas.android.com/apk/res/android:pathData(0x01010405)="M108,0v52a56,56 0,0 1,-56 -52z" (Raw: "M108,0v52a56,56 0,0 1,-56 -52z")
+--- drawable/ic_launcher_foreground（res/Qr.xml）颜色属性 ---
+A: http://schemas.android.com/apk/res/android:fillColor(0x01010404)=#00000000
+A: http://schemas.android.com/apk/res/android:pathData(0x01010405)="M37,33.7h33a4.3,4.3 0,0 1,4.3 4.3v32a4.3,4.3 0,0 1,-4.3 4.3h-33a2.3,2.3 0,0 1,-2.3 -2.3v-36a2.3,2.3 0,0 1,2.3 -2.3z" (Raw: "M37,33.7h33a4.3,4.3 0,0 1,4.3 4.3v32a4.3,4.3 0,0 1,-4.3 4.3h-33a2.3,2.3 0,0 1,-2.3 -2.3v-36a2.3,2.3 0,0 1,2.3 -2.3z")
+A: http://schemas.android.com/apk/res/android:strokeColor(0x01010406)=#ffffffff
+A: http://schemas.android.com/apk/res/android:fillColor(0x01010404)=#00000000
+A: http://schemas.android.com/apk/res/android:pathData(0x01010405)="M42,34v40" (Raw: "M42,34v40")
+A: http://schemas.android.com/apk/res/android:strokeColor(0x01010406)=#ffffffff
+A: http://schemas.android.com/apk/res/android:fillColor(0x01010404)=#00000000
+A: http://schemas.android.com/apk/res/android:pathData(0x01010405)="M49,42h19M49,49h12" (Raw: "M49,42h19M49,49h12")
+A: http://schemas.android.com/apk/res/android:strokeColor(0x01010406)=#b3ffffff
+A: http://schemas.android.com/apk/res/android:fillColor(0x01010404)=#00000000
+A: http://schemas.android.com/apk/res/android:pathData(0x01010405)="M49,67L55,61L60,64L67,56" (Raw: "M49,67L55,61L60,64L67,56")
+A: http://schemas.android.com/apk/res/android:strokeColor(0x01010406)=#ffffffff
+A: http://schemas.android.com/apk/res/android:fillColor(0x01010404)=#ffffffff
+A: http://schemas.android.com/apk/res/android:pathData(0x01010405)="M67,52.6a3.4,3.4 0,1 1,0 6.8a3.4,3.4 0,1 1,0 -6.8z" (Raw: "M67,52.6a3.4,3.4 0,1 1,0 6.8a3.4,3.4 0,1 1,0 -6.8z")
+--- drawable/ic_launcher_monochrome（res/Vy.xml）颜色属性 ---
+A: http://schemas.android.com/apk/res/android:fillColor(0x01010404)=#00000000
+A: http://schemas.android.com/apk/res/android:pathData(0x01010405)="M37,33.7h33a4.3,4.3 0,0 1,4.3 4.3v32a4.3,4.3 0,0 1,-4.3 4.3h-33a2.3,2.3 0,0 1,-2.3 -2.3v-36a2.3,2.3 0,0 1,2.3 -2.3z" (Raw: "M37,33.7h33a4.3,4.3 0,0 1,4.3 4.3v32a4.3,4.3 0,0 1,-4.3 4.3h-33a2.3,2.3 0,0 1,-2.3 -2.3v-36a2.3,2.3 0,0 1,2.3 -2.3z")
+A: http://schemas.android.com/apk/res/android:strokeColor(0x01010406)=#ffffffff
+A: http://schemas.android.com/apk/res/android:fillColor(0x01010404)=#00000000
+A: http://schemas.android.com/apk/res/android:pathData(0x01010405)="M42,34v40" (Raw: "M42,34v40")
+A: http://schemas.android.com/apk/res/android:strokeColor(0x01010406)=#ffffffff
+A: http://schemas.android.com/apk/res/android:fillColor(0x01010404)=#00000000
+A: http://schemas.android.com/apk/res/android:pathData(0x01010405)="M49,42h19M49,49h12" (Raw: "M49,42h19M49,49h12")
+A: http://schemas.android.com/apk/res/android:strokeColor(0x01010406)=#ffffffff
+A: http://schemas.android.com/apk/res/android:fillColor(0x01010404)=#00000000
+A: http://schemas.android.com/apk/res/android:pathData(0x01010405)="M49,67L55,61L60,64L67,56" (Raw: "M49,67L55,61L60,64L67,56")
+A: http://schemas.android.com/apk/res/android:strokeColor(0x01010406)=#ffffffff
+A: http://schemas.android.com/apk/res/android:fillColor(0x01010404)=#ffffffff
+A: http://schemas.android.com/apk/res/android:pathData(0x01010405)="M67,52.6a3.4,3.4 0,1 1,0 6.8a3.4,3.4 0,1 1,0 -6.8z" (Raw: "M67,52.6a3.4,3.4 0,1 1,0 6.8a3.4,3.4 0,1 1,0 -6.8z")
+--- 背景渐变（aapt 内联 drawable/$ic_launcher_background__0，res/RV.xml；应为 #1A1A1A → #0A0A0A）---
+A: http://schemas.android.com/apk/res/android:startColor(0x0101019d)=#ff1a1a1a
+A: http://schemas.android.com/apk/res/android:endColor(0x0101019e)=#ff0a0a0a
+--- 源码/资源中旧绿/金色值残留（应无输出）---
+（无）
+--- 源码中出现的全部颜色字面量（去重；仅灰阶 + 红色语义色 E5484D/F07178 及其 error 容器色）---
+#00000000 #0FFFFFFF #B3FFFFFF #FF0A0A0A #FF0B0B0B #FF111111 #FF1A1A1A #FFF4F4F4 #FFF5F5F5 #FFFFFFFF 0x0D000000 0x14000000 0x17000000 0xFF070707 0xFF0A0A0A 0xFF0B0B0B 0xFF111111 0xFF121212 0xFF171717 0xFF1A1A1A 0xFF1E1E1E 0xFF222222 0xFF232323 0xFF262626 0xFF2A2A2A 0xFF3A3A3A 0xFF3D0B0E 0xFF4A1C1F 0xFF555555 0xFF5C1214 0xFF8A8A8A 0xFF9A9A9A 0xFFBDBDBD 0xFFC8C8C8 0xFFE5484D 0xFFE5E5E5 0xFFE6E6E6 0xFFEAEAEA 0xFFEDEDED 0xFFF07178 0xFFF2F2F2 0xFFF4F4F4 0xFFF5F5F5 0xFFFAFAFA 0xFFFBE4E5 0xFFFFDADB 0xFFFFFFFF 
+--- dex 中的关键类回归 ---
 Lcom/ledger/app/ui/LedgerPalette; -> found
+Lcom/ledger/app/ui/ThemeKt; -> found
+Lcom/ledger/app/ui/ChartKt; -> found
 Lcom/ledger/app/ui/HomeScreenKt; -> found
-Lcom/ledger/app/ui/CommonKt; -> found
-Lcom/ledger/app/ui/NavTab; -> found
---- 源码中动态取色调用（应为 0）---
-dynamicLightColorScheme/dynamicDarkColorScheme 出现次数: 0
-
-===== 第四轮 自动更新检查（ledger.apk）=====
---- versionCode / versionName ---
-package: name='com.ledger.app' versionCode='4' versionName='1.3' platformBuildVersionName='15' platformBuildVersionCode='35' compileSdkVersion='35' compileSdkVersionCodename='15'
---- 权限（应含 INTERNET、REQUEST_INSTALL_PACKAGES）---
-package: com.ledger.app
-uses-permission: name='android.permission.INTERNET'
-uses-permission: name='android.permission.REQUEST_INSTALL_PACKAGES'
-uses-permission: name='android.permission.QUERY_ALL_PACKAGES'
-permission: com.ledger.app.DYNAMIC_RECEIVER_NOT_EXPORTED_PERMISSION
-uses-permission: name='com.ledger.app.DYNAMIC_RECEIVER_NOT_EXPORTED_PERMISSION'
---- usesCleartextTraffic（出现次数应为 0）---
-0
---- FileProvider ---
-      E: provider (line=45)
-        A: android:name(0x01010003)="androidx.core.content.FileProvider" (Raw: "androidx.core.content.FileProvider")
-        A: android:exported(0x01010010)=(type 0x12)0x0
-        A: android:authorities(0x01010018)="com.ledger.app.fileprovider" (Raw: "com.ledger.app.fileprovider")
-        A: android:grantUriPermissions(0x0101001b)=(type 0x12)0xffffffff
-        E: meta-data (line=50)
-          A: android:name(0x01010003)="android.support.FILE_PROVIDER_PATHS" (Raw: "android.support.FILE_PROVIDER_PATHS")
-          A: android:resource(0x01010025)=@0x7f0c0000
---- res/xml/file_paths.xml ---
-资源 xml/file_paths -> res/8K.xml
-E: paths (line=2)
-  E: cache-path (line=3)
-    A: name="update" (Raw: "update")
-    A: path="updates/" (Raw: "updates/")
---- dex 中的更新模块类 ---
 Lcom/ledger/app/util/UpdateChecker; -> found
-Lcom/ledger/app/util/ReleaseInfo; -> found
-Lcom/ledger/app/util/IncompleteDownloadException; -> found
-Lcom/ledger/app/ui/UpdateController; -> found
-Lcom/ledger/app/ui/UpdateUiKt; -> found
-Landroidx/core/content/FileProvider; -> found
---- 第二、三轮关键类回归 ---
-Lcom/tom_roush/pdfbox/pdmodel/PDDocument; -> found
 Lcom/ledger/app/csv/PdfBillParser; -> found
 Lcom/ledger/app/csv/BillParser; -> found
-Lcom/ledger/app/ui/LedgerPalette; -> found
-Lcom/ledger/app/ui/HomeScreenKt; -> found
---- 是否引入 OkHttp（应为 0）---
-0
---- dex 字符串常量 ---
+Lcom/tom_roush/pdfbox/pdmodel/PDDocument; -> found
+--- dex 字符串常量（自动更新回归）---
 https://api.github.com/repos/wbw5780/ledger-app/releases/latest -> 1
-application/vnd.github+json -> 1
 application/vnd.android.package-archive -> 1
-android.settings.MANAGE_UNKNOWN_APP_SOURCES -> 1
---- 签名与上一版一致（证书 SHA-256 应为 df55d71c…8fbbe）---
-Signer #1 certificate SHA-256 digest: df55d71cc8021a9aae6c11f04a7a961141f2ff341b41c6929b1a25bb8ad8fbbe
-
-===== GitHub Releases 发布核验（匿名，不带 token）=====
-tag_name=4 name=v1.3 draft=False prerelease=False
-body=新增应用内自动更新：自动检查 GitHub Releases，应用内下载并引导安装
-asset=ledger.apk size=11116658 content_type=application/vnd.android.package-archive
-url=https://github.com/wbw5780/ledger-app/releases/download/4/ledger.apk
-首跳 HTTP/2 302 
-完整下载：最终 HTTP 200，重定向 1 次，最终主机 https://release-assets.githubusercontent.com
-下载字节 11116658，本地 ledger.apk 11116658
-SHA-256 一致：ddb33d4fd092c22d039daf97c5ea2595b743d458d89675dae68ae5240d8cbfdb
 
 --- 单元测试结果（app/build/test-results/testDebugUnitTest）---
 <testsuite name="com.ledger.app.BillParserTest" tests="7" skipped="0" failures="0" errors="0"

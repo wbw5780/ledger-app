@@ -29,8 +29,9 @@ import com.ledger.app.util.Money
 import com.ledger.app.util.SeriesPoint
 
 /**
- * 累计盈亏折线图（纯 Canvas 绘制）。零轴以上绿色、以下红色，渐变填充（绿→透明 / 红→透明），
- * 无实线坐标轴，刻度文字 10.5sp 淡灰，末端点暖金光晕。
+ * 累计盈亏折线图（纯 Canvas 绘制）。线条 3dp：零轴以上为主文字色（黑/白），
+ * 以下为红色；零轴上方灰色渐变填充（主文字色 18%→透明），下方红色渐变（25%→透明），
+ * 无实线坐标轴，零轴淡灰虚线，刻度文字 10.5sp 淡灰，末端点灰色光晕。
  */
 @Composable
 fun CumulativeChart(
@@ -50,7 +51,7 @@ fun CumulativeChart(
     }
     val pos = MoneyColors.income()
     val neg = MoneyColors.expense()
-    val gold = LocalLedger.current.gold
+    val glow = MaterialTheme.colorScheme.onSurfaceVariant
     val cardColor = LocalLedger.current.card
     val axisColor = MaterialTheme.colorScheme.onSurfaceVariant.copy(alpha = 0.35f)
     val labelColor = MaterialTheme.colorScheme.onSurfaceVariant.copy(alpha = 0.75f)
@@ -109,11 +110,11 @@ fun CumulativeChart(
         }
         val stroke = Stroke(width = 3.dp.toPx(), cap = StrokeCap.Round, join = StrokeJoin.Round)
 
-        // 零轴以上：绿色
+        // 零轴以上：主文字色（灰色渐变）
         clipRect(left = 0f, top = 0f, right = size.width, bottom = zeroY) {
             drawPath(
                 fill,
-                Brush.verticalGradient(listOf(pos.copy(alpha = 0.42f), pos.copy(alpha = 0.0f)), startY = topPad, endY = zeroY)
+                Brush.verticalGradient(listOf(pos.copy(alpha = 0.18f), pos.copy(alpha = 0.0f)), startY = topPad, endY = zeroY)
             )
             drawPath(line, pos, style = stroke)
         }
@@ -121,14 +122,14 @@ fun CumulativeChart(
         clipRect(left = 0f, top = zeroY, right = size.width, bottom = size.height) {
             drawPath(
                 fill,
-                Brush.verticalGradient(listOf(neg.copy(alpha = 0.0f), neg.copy(alpha = 0.42f)), startY = zeroY, endY = topPad + h)
+                Brush.verticalGradient(listOf(neg.copy(alpha = 0.0f), neg.copy(alpha = 0.25f)), startY = zeroY, endY = topPad + h)
             )
             drawPath(line, neg, style = stroke)
         }
         // 末端点
         val last = offsets.last()
         val lastColor = if (pts.last().value >= 0) pos else neg
-        drawCircle(gold.copy(alpha = 0.25f), 8.dp.toPx(), last)
+        drawCircle(glow.copy(alpha = 0.3f), 8.dp.toPx(), last)
         drawCircle(lastColor, 5.dp.toPx(), last)
         drawCircle(cardColor, 2.2.dp.toPx(), last)
 

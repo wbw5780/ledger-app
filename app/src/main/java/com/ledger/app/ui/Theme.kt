@@ -19,110 +19,118 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 
 /*
- * 品牌配色：翡翠绿 + 暖金点缀。不使用 Android 12+ 动态取色，亮/暗两套全部自定义，
- * 所有 colorScheme 槽位都显式赋值，避免任何 Material 默认紫色漏出来。
+ * 品牌配色：黑白灰单色系，唯一保留的彩色是支出/负盈亏的红色。不使用 Android 12+ 动态取色，
+ * 亮/暗两套全部自定义，所有 colorScheme 槽位都显式赋值，避免任何 Material 默认紫色漏出来。
  */
 
 object Brand {
-    val Emerald = Color(0xFF0E7C5A)
-    val EmeraldDeep = Color(0xFF0A5C43)
-    val EmeraldBright = Color(0xFF3DBE8C)
-    val Gold = Color(0xFFD9A441)
-    val GoldBright = Color(0xFFE6B75A)
+    /** 浅色：主文字 / 主色 */
+    val Ink = Color(0xFF111111)
+    /** 深色：主文字 / 主色 */
+    val Paper = Color(0xFFF5F5F5)
+    val ExpenseLight = Color(0xFFE5484D)
+    val ExpenseDark = Color(0xFFF07178)
 }
 
 private val LightColors = lightColorScheme(
-    primary = Brand.Emerald,
+    primary = Brand.Ink,
     onPrimary = Color.White,
-    primaryContainer = Color(0xFFDCF1E7),
-    onPrimaryContainer = Color(0xFF053D2B),
-    inversePrimary = Color(0xFF7FD6AE),
-    secondary = Color(0xFF4F6B5F),
+    primaryContainer = Color(0xFFEAEAEA),
+    onPrimaryContainer = Brand.Ink,
+    inversePrimary = Brand.Paper,
+    secondary = Color(0xFF555555),
     onSecondary = Color.White,
-    secondaryContainer = Color(0xFFE4EFE9),
-    onSecondaryContainer = Color(0xFF173328),
-    tertiary = Brand.Gold,
-    onTertiary = Color(0xFF3A2A00),
-    tertiaryContainer = Color(0xFFF8EBCC),
-    onTertiaryContainer = Color(0xFF4A3500),
-    error = Color(0xFFD14B4B),
+    secondaryContainer = Color(0xFFEAEAEA),
+    onSecondaryContainer = Brand.Ink,
+    tertiary = Color(0xFF555555),
+    onTertiary = Color.White,
+    tertiaryContainer = Color(0xFFEAEAEA),
+    onTertiaryContainer = Brand.Ink,
+    error = Brand.ExpenseLight,
     onError = Color.White,
-    errorContainer = Color(0xFFFBE3E1),
-    onErrorContainer = Color(0xFF5C1212),
-    background = Color(0xFFF6F7F4),
-    onBackground = Color(0xFF16201C),
+    errorContainer = Color(0xFFFBE4E5),
+    onErrorContainer = Color(0xFF5C1214),
+    background = Color(0xFFF4F4F4),
+    onBackground = Brand.Ink,
     surface = Color(0xFFFFFFFF),
-    onSurface = Color(0xFF16201C),
-    surfaceVariant = Color(0xFFEEF1EC),
-    onSurfaceVariant = Color(0xFF6B7771),
+    onSurface = Brand.Ink,
+    surfaceVariant = Color(0xFFEAEAEA),
+    onSurfaceVariant = Color(0xFF8A8A8A),
     surfaceTint = Color.Transparent,
-    inverseSurface = Color(0xFF26302C),
-    inverseOnSurface = Color(0xFFEEF2EE),
-    outline = Color(0xFFC6CFCA),
-    outlineVariant = Color(0xFFE4E9E5),
+    inverseSurface = Color(0xFF222222),
+    inverseOnSurface = Brand.Paper,
+    outline = Color(0xFFC8C8C8),
+    outlineVariant = Color(0xFFE5E5E5),
     scrim = Color.Black,
     surfaceBright = Color(0xFFFFFFFF),
-    surfaceDim = Color(0xFFE6EAE6),
+    surfaceDim = Color(0xFFE6E6E6),
     surfaceContainerLowest = Color(0xFFFFFFFF),
-    surfaceContainerLow = Color(0xFFFAFBF9),
-    surfaceContainer = Color(0xFFF2F5F1),
+    surfaceContainerLow = Color(0xFFFAFAFA),
+    surfaceContainer = Color(0xFFF2F2F2),
     surfaceContainerHigh = Color(0xFFFFFFFF),
-    surfaceContainerHighest = Color(0xFFE9EEEA),
+    surfaceContainerHighest = Color(0xFFEAEAEA),
 )
 
 private val DarkColors = darkColorScheme(
-    primary = Brand.EmeraldBright,
-    onPrimary = Color(0xFF00281B),
-    primaryContainer = Color(0xFF1D3B30),
-    onPrimaryContainer = Color(0xFFB7ECD3),
-    inversePrimary = Brand.Emerald,
-    secondary = Color(0xFF9DB8AB),
-    onSecondary = Color(0xFF0F241C),
-    secondaryContainer = Color(0xFF243230),
-    onSecondaryContainer = Color(0xFFD3E6DC),
-    tertiary = Brand.GoldBright,
-    onTertiary = Color(0xFF3A2A00),
-    tertiaryContainer = Color(0xFF3B3120),
-    onTertiaryContainer = Color(0xFFF6DFA8),
-    error = Color(0xFFFF8A80),
-    onError = Color(0xFF4A0E0E),
-    errorContainer = Color(0xFF5A1D1D),
-    onErrorContainer = Color(0xFFFFDAD6),
-    background = Color(0xFF101413),
-    onBackground = Color(0xFFE5ECE8),
-    surface = Color(0xFF1A201E),
-    onSurface = Color(0xFFE5ECE8),
-    surfaceVariant = Color(0xFF232A28),
-    onSurfaceVariant = Color(0xFF93A19A),
+    primary = Brand.Paper,
+    onPrimary = Brand.Ink,
+    primaryContainer = Color(0xFF232323),
+    onPrimaryContainer = Brand.Paper,
+    inversePrimary = Brand.Ink,
+    secondary = Color(0xFFBDBDBD),
+    onSecondary = Brand.Ink,
+    secondaryContainer = Color(0xFF232323),
+    onSecondaryContainer = Brand.Paper,
+    tertiary = Color(0xFFBDBDBD),
+    onTertiary = Brand.Ink,
+    tertiaryContainer = Color(0xFF232323),
+    onTertiaryContainer = Brand.Paper,
+    error = Brand.ExpenseDark,
+    onError = Color(0xFF3D0B0E),
+    errorContainer = Color(0xFF4A1C1F),
+    onErrorContainer = Color(0xFFFFDADB),
+    background = Color(0xFF0B0B0B),
+    onBackground = Brand.Paper,
+    surface = Color(0xFF171717),
+    onSurface = Brand.Paper,
+    surfaceVariant = Color(0xFF232323),
+    onSurfaceVariant = Color(0xFF9A9A9A),
     surfaceTint = Color.Transparent,
-    inverseSurface = Color(0xFFE5ECE8),
-    inverseOnSurface = Color(0xFF1A201E),
-    outline = Color(0xFF3B4743),
-    outlineVariant = Color(0xFF29322F),
+    inverseSurface = Brand.Paper,
+    inverseOnSurface = Color(0xFF171717),
+    outline = Color(0xFF3A3A3A),
+    outlineVariant = Color(0xFF262626),
     scrim = Color.Black,
-    surfaceBright = Color(0xFF2A322F),
-    surfaceDim = Color(0xFF101413),
-    surfaceContainerLowest = Color(0xFF0C100F),
-    surfaceContainerLow = Color(0xFF151A19),
-    surfaceContainer = Color(0xFF1A201E),
-    surfaceContainerHigh = Color(0xFF212826),
-    surfaceContainerHighest = Color(0xFF29312E),
+    surfaceBright = Color(0xFF2A2A2A),
+    surfaceDim = Color(0xFF0B0B0B),
+    surfaceContainerLowest = Color(0xFF070707),
+    surfaceContainerLow = Color(0xFF121212),
+    surfaceContainer = Color(0xFF171717),
+    surfaceContainerHigh = Color(0xFF1E1E1E),
+    surfaceContainerHighest = Color(0xFF262626),
 )
 
 /** Material colorScheme 之外的品牌色 */
 @Immutable
 data class LedgerPalette(
     val dark: Boolean,
+    /** 收入/正盈亏：不用绿，直接用主文字色，靠「+」号区分 */
     val income: Color,
+    /** income 作为底色时其上的文字色 */
+    val onIncome: Color,
     val expense: Color,
-    val gold: Color,
+    /** 中性徽标底 / 字（原暖金徽标改为灰阶） */
+    val badge: Color,
+    val onBadge: Color,
     /** 卡片底色（与页面背景有明度差） */
     val card: Color,
     /** 暗色下卡片描边（亮色为透明，改用极淡阴影） */
     val cardBorder: Color,
-    /** 图标容器 / 次要按钮的 tonal 底 */
+    /** 图标容器 / 次要按钮 / chip 的 tonal 底 */
     val tonal: Color,
     val onTonal: Color,
+    /** 项目图标容器的中性灰底 */
+    val iconBg: Color,
     /** 底部导航栏底色 */
     val navBar: Color,
     val hairline: Color,
@@ -130,28 +138,34 @@ data class LedgerPalette(
 
 private val LightPalette = LedgerPalette(
     dark = false,
-    income = Color(0xFF2E9E6B),
-    expense = Color(0xFFE25B5B),
-    gold = Brand.Gold,
+    income = Brand.Ink,
+    onIncome = Color.White,
+    expense = Brand.ExpenseLight,
+    badge = Color(0xFFEAEAEA),
+    onBadge = Brand.Ink,
     card = Color(0xFFFFFFFF),
     cardBorder = Color.Transparent,
-    tonal = Color(0xFFE3F2EA),
-    onTonal = Brand.Emerald,
+    tonal = Color(0xFFEAEAEA),
+    onTonal = Brand.Ink,
+    iconBg = Color(0xFFEDEDED),
     navBar = Color(0xFFFFFFFF),
-    hairline = Color(0xFFE7ECE8),
+    hairline = Color(0xFFE5E5E5),
 )
 
 private val DarkPalette = LedgerPalette(
     dark = true,
-    income = Color(0xFF4CC48A),
-    expense = Color(0xFFFF7A7A),
-    gold = Brand.GoldBright,
-    card = Color(0xFF1A201E),
-    cardBorder = Color(0x14FFFFFF),
-    tonal = Color(0xFF1F3A2F),
-    onTonal = Color(0xFF7FDDB2),
-    navBar = Color(0xFF161B1A),
-    hairline = Color(0x12FFFFFF),
+    income = Brand.Paper,
+    onIncome = Brand.Ink,
+    expense = Brand.ExpenseDark,
+    badge = Color(0xFF232323),
+    onBadge = Brand.Paper,
+    card = Color(0xFF171717),
+    cardBorder = Color(0xFF262626),
+    tonal = Color(0xFF232323),
+    onTonal = Brand.Paper,
+    iconBg = Color(0xFF232323),
+    navBar = Color(0xFF121212),
+    hairline = Color(0xFF262626),
 )
 
 val LocalLedger = staticCompositionLocalOf { LightPalette }

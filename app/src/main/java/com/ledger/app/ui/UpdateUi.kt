@@ -207,7 +207,7 @@ fun UpdateDialogs(updater: UpdateController) {
             text = {
                 Column(Modifier.heightIn(max = 320.dp).verticalScroll(rememberScrollState())) {
                     Row(verticalAlignment = Alignment.CenterVertically) {
-                        GoldBadge("${UpdateChecker.mb(d.release.apkSize)} MB")
+                        CountBadge("${UpdateChecker.mb(d.release.apkSize)} MB")
                     }
                     Spacer(Modifier.height(12.dp))
                     Text(
@@ -306,7 +306,7 @@ fun UpdateEntryCard(version: String) {
                 }
                 CheckState.UpToDate ->
                     Text("已是最新", style = MaterialTheme.typography.bodyMedium, color = cs.onSurfaceVariant)
-                is CheckState.Found -> GoldBadge("新版 v${state.release.versionName}")
+                is CheckState.Found -> CountBadge("新版 v${state.release.versionName}")
                 CheckState.Failed ->
                     Text(
                         "检查失败，点击重试", style = MaterialTheme.typography.bodyMedium, color = p.expense,

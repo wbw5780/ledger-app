@@ -201,7 +201,7 @@ fun RecordEditScreen(db: AppDatabase, nav: Navigator, recordId: Long?, presetPro
                 original?.let { o ->
                     if (o.source != RecordSource.MANUAL) {
                         Spacer(Modifier.height(14.dp))
-                        GoldBadge(if (o.source == RecordSource.WECHAT) "微信账单导入" else "支付宝账单导入")
+                        CountBadge(if (o.source == RecordSource.WECHAT) "微信账单导入" else "支付宝账单导入")
                     }
                 }
             }
@@ -329,7 +329,7 @@ private fun TypeToggle(type: Int, onChange: (Int) -> Unit) {
             ) {
                 Text(
                     label,
-                    color = if (sel) Color.White else MaterialTheme.colorScheme.onSurfaceVariant,
+                    color = if (!sel) MaterialTheme.colorScheme.onSurfaceVariant else if (t == RecordType.INCOME) p.onIncome else Color.White,
                     fontWeight = if (sel) FontWeight.Bold else FontWeight.Medium,
                     fontSize = 15.sp,
                 )

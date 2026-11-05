@@ -46,8 +46,6 @@ import androidx.compose.ui.graphics.ImageBitmap
 import androidx.compose.ui.graphics.Shape
 import androidx.compose.ui.graphics.asAndroidBitmap
 import androidx.compose.ui.graphics.asImageBitmap
-import androidx.compose.ui.graphics.compositeOver
-import androidx.compose.ui.graphics.lerp
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
@@ -92,7 +90,7 @@ fun LedgerCard(
 ) {
     val p = LocalLedger.current
     var m = modifier
-    if (!p.dark) m = m.shadow(10.dp, shape, ambientColor = Color(0x0D0E3B2C), spotColor = Color(0x170E3B2C))
+    if (!p.dark) m = m.shadow(10.dp, shape, ambientColor = Color(0x0D000000), spotColor = Color(0x17000000))
     m = m.clip(shape).background(color)
     if (p.dark) m = m.border(1.dp, p.cardBorder, shape)
     if (onClick != null) m = m.clickable(onClick = onClick)
@@ -190,33 +188,12 @@ fun ProjectIcon(iconFile: String?, name: String, size: Dp = 50.dp) {
     BitmapOrLetter(bmp, name, size)
 }
 
-/** 取位图的平均色（忽略透明像素），失败返回 null */
-private fun averageColor(bmp: ImageBitmap): Color? = runCatching {
-    val b = bmp.asAndroidBitmap()
-    var r = 0L; var g = 0L; var bl = 0L; var n = 0L
-    val step = maxOf(1, minOf(b.width, b.height) / 14)
-    var y = 0
-    while (y < b.height) {
-        var x = 0
-        while (x < b.width) {
-            val c = b.getPixel(x, y)
-            if ((c ushr 24) > 0x80) {
-                r += (c shr 16) and 0xFF; g += (c shr 8) and 0xFF; bl += c and 0xFF; n++
-            }
-            x += step
-        }
-        y += step
-    }
-    if (n == 0L) null else Color((r / n).toInt(), (g / n).toInt(), (bl / n).toInt())
-}.getOrNull()
-
 @Composable
 fun BitmapOrLetter(bmp: ImageBitmap?, name: String, size: Dp) {
     val p = LocalLedger.current
     val radius = if (size >= 48.dp) 14.dp else (size.value * 0.3f).dp
     val shape = RoundedCornerShape(radius)
-    val avg = remember(bmp) { bmp?.let { averageColor(it) } }
-    val container = if (avg != null) lerp(p.card, avg, if (p.dark) 0.28f else 0.16f).compositeOver(p.card) else p.tonal
+    val container = p.iconBg
     Box(Modifier.size(size).clip(shape).background(container), contentAlignment = Alignment.Center) {
         if (bmp != null) {
             Image(
@@ -315,7 +292,7 @@ fun RoundIconButton(
     }
 }
 
-/** 顶栏右上「记一笔」快捷入口：品牌绿圆角方块 + 笔图标 */
+/** 顶栏右上「记一笔」快捷入口：主色（黑/白）圆角方块 + 笔图标 */
 @Composable
 fun QuickRecordButton(onClick: () -> Unit) {
     Box(
@@ -334,25 +311,25 @@ fun SectionHeader(title: String, modifier: Modifier = Modifier, badge: String? =
         Text(title, style = MaterialTheme.typography.titleLarge)
         if (badge != null) {
             Spacer(Modifier.width(8.dp))
-            GoldBadge(badge)
+            CountBadge(badge)
         }
         Spacer(Modifier.weight(1f))
         trailing()
     }
 }
 
-/** 暖金徽标 */
+/** 中性灰徽标（浅色 #EAEAEA 底黑字，深色 #232323 底白字） */
 @Composable
-fun GoldBadge(text: String) {
+fun CountBadge(text: String) {
     val p = LocalLedger.current
     Box(
-        Modifier.clip(CircleShape).background(p.gold.copy(alpha = if (p.dark) 0.22f else 0.18f)).padding(horizontal = 9.dp, vertical = 2.dp),
+        Modifier.clip(CircleShape).background(p.badge).padding(horizontal = 9.dp, vertical = 2.dp),
     ) {
-        Text(text, color = if (p.dark) p.gold else Color(0xFF8A6111), fontSize = 12.sp, fontWeight = FontWeight.Bold, style = AmountStyle)
+        Text(text, color = p.onBadge, fontSize = 12.sp, fontWeight = FontWeight.Bold, style = AmountStyle)
     }
 }
 
-/** 涨跌箭头徽标（绿底↑ / 红底↓） */
+/** 涨跌箭头徽标（灰底主文字色↑ / 红底↓） */
 @Composable
 fun TrendBadge(cents: Long) {
     if (cents == 0L) return
@@ -364,7 +341,7 @@ fun TrendBadge(cents: Long) {
 
 // ---------------------------------------------------------------- 盈亏卡
 
-/** 盈亏主卡：标签 + 净额大数字（红/绿 + ↑↓）+ 卡内累计曲线 */
+/** 盈亏主卡：标签 + 净额大数字（正数主文字色 / 负数红 + ↑↓）+ 卡内累计曲线 */
 @Composable
 fun HeroProfitCard(label: String, net: Long, series: List<SeriesPoint>, modifier: Modifier = Modifier) {
     LedgerCard(modifier.fillMaxWidth(), contentPadding = PaddingValues(start = 20.dp, end = 20.dp, top = 20.dp, bottom = 14.dp)) {
@@ -454,13 +431,12 @@ fun TonalButton(
 @Composable
 fun PillChip(text: String, selected: Boolean, onClick: () -> Unit) {
     val p = LocalLedger.current
-    val bg by animateColorAsState(if (selected) MaterialTheme.colorScheme.primary else p.card, label = "chipBg")
+    val bg by animateColorAsState(if (selected) MaterialTheme.colorScheme.primary else p.tonal, label = "chipBg")
     val fg by animateColorAsState(
-        if (selected) MaterialTheme.colorScheme.onPrimary else MaterialTheme.colorScheme.onSurfaceVariant,
+        if (selected) MaterialTheme.colorScheme.onPrimary else MaterialTheme.colorScheme.onSurface,
         label = "chipFg",
     )
-    var m = Modifier.height(36.dp).clip(CircleShape).background(bg)
-    if (!selected) m = m.border(1.dp, if (p.dark) p.cardBorder else p.hairline, CircleShape)
+    val m = Modifier.height(36.dp).clip(CircleShape).background(bg)
     Box(m.clickable(onClick = onClick).padding(horizontal = 16.dp), contentAlignment = Alignment.Center) {
         Text(text, color = fg, fontSize = 14.sp, fontWeight = if (selected) FontWeight.SemiBold else FontWeight.Medium, maxLines = 1)
     }
@@ -507,14 +483,14 @@ val MainTabs = listOf(
     NavTab("我的", LedgerIcons.Person),
 )
 
-/** 自定义底部导航：药丸形品牌绿选中指示器 + 反色图标 */
+/** 自定义底部导航：药丸形主色（浅色黑 / 深色白）选中指示器 + 反色图标 */
 @Composable
 fun LedgerBottomBar(selected: Int, onSelect: (Int) -> Unit) {
     val p = LocalLedger.current
     val cs = MaterialTheme.colorScheme
     Box(
         Modifier.fillMaxWidth()
-            .then(if (!p.dark) Modifier.shadow(16.dp, RoundedCornerShape(0.dp), ambientColor = Color(0x140E3B2C), spotColor = Color(0x140E3B2C)) else Modifier)
+            .then(if (!p.dark) Modifier.shadow(16.dp, RoundedCornerShape(0.dp), ambientColor = Color(0x14000000), spotColor = Color(0x14000000)) else Modifier)
             .background(p.navBar)
             .drawBehind { drawLine(p.hairline, Offset(0f, 0f), Offset(size.width, 0f), 1.dp.toPx()) }
             .navigationBarsPadding(),

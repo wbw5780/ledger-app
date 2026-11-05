@@ -5,7 +5,7 @@
 - 源码仓库：<https://github.com/wbw5780/ledger-app>，安装包下载：<https://github.com/wbw5780/ledger-app/releases/latest>
 
 - 技术栈：Kotlin + Jetpack Compose (Material 3，自定义主题与组件)，单 Activity 自导航 + 底部 Tab；Room (SQLite)；图表为 Compose Canvas 手绘（无第三方图表库、无 Coil）；PDF 文本提取用 [pdfbox-android](https://github.com/TomRoush/PdfBox-Android) 2.0.27.0（Apache 2.0）
-- minSdk 26（Android 8.0+），targetSdk / compileSdk 35；当前版本 1.3（versionCode 4）
+- minSdk 26（Android 8.0+），targetSdk / compileSdk 35；当前版本 1.4（versionCode 5）
 - 包名：`com.ledger.app`，应用名：账本
 
 ## 安装（侧载）
@@ -29,7 +29,7 @@
 3. 「总览」「明细」页右上角的笔形按钮、项目页「记一笔」都可手动记账；点击任一流水可编辑或删除。
 4. 删除项目（项目页右上角垃圾桶）会弹确认，并一并删除该项目下的所有记录。
 
-视觉：自定义翡翠绿品牌配色（亮/暗两套，跟随系统深色模式，不使用 Android 12+ 动态取色），收入绿 / 支出红，暖金点缀；edge-to-edge 透明状态栏/导航栏；自绘线性图标；启动图标为自适应图标（深绿底 + 白色账本与上升折线，含 Android 13 主题图标 monochrome 层），Android 12+ 启动画面自动使用该图标。
+视觉：黑白灰单色系配色（1.4 起；亮色页面 #F4F4F4 / 卡片白 / 主文字与主按钮 #111111，暗色页面 #0B0B0B / 卡片 #171717 + 1dp #262626 描边 / 主文字与主按钮 #F5F5F5；跟随系统深色模式，不使用 Android 12+ 动态取色）。唯一的彩色是红色：支出和负盈亏为红（亮 #E5484D / 暗 #F07178）；收入和正盈亏不用绿色，用主文字色加「+」号区分。曲线图零轴以上是主文字色线条加灰色渐变，零轴以下是红色线条加红色渐变。edge-to-edge 透明状态栏/导航栏；自绘线性图标；启动图标为自适应图标（黑→深灰渐变底 + 白色线框账本、白色上升折线和白色端点，含 Android 13 主题图标 monochrome 层），Android 12+ 启动画面背景为 #F4F4F4 / #0B0B0B。
 
 ## 微信账单导出
 

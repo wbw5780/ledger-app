@@ -6,8 +6,8 @@
         <item name="android:windowLightStatusBar">true</item>
         <item name="android:windowLightNavigationBar">true</item>
         <item name="android:windowBackground">@color/bg_light</item>
-        <item name="android:colorAccent">@color/brand_emerald</item>
-        <item name="android:colorPrimary">@color/brand_emerald</item>
+        <item name="android:colorAccent">@color/brand_ink</item>
+        <item name="android:colorPrimary">@color/brand_ink</item>
         <item name="android:windowSplashScreenBackground">@color/bg_light</item>
         <item name="android:windowSplashScreenAnimatedIcon">@mipmap/ic_launcher</item>
     </style>

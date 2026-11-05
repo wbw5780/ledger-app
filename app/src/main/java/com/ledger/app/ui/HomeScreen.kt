@@ -3,6 +3,7 @@ package com.ledger.app.ui
 import android.content.Context
 import android.widget.Toast
 import androidx.compose.foundation.background
+import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -302,13 +303,16 @@ private fun MeTab(projects: List<Project>, recordCount: Int, nav: Navigator, qui
     }
 }
 
-/** 品牌卡：深绿渐变 + 项目数 / 流水数 */
+/** 品牌卡：黑→深灰渐变（深色主题略提亮以区分页面背景）+ 项目数 / 流水数 */
 @Composable
 private fun BrandCard(projectCount: Int, recordCount: Int) {
     val shape = CardShape
+    val p = LocalLedger.current
+    val gradient = if (p.dark) listOf(Color(0xFF2A2A2A), Color(0xFF1A1A1A)) else listOf(Color(0xFF1A1A1A), Color(0xFF0A0A0A))
     Box(
         Modifier.fillMaxWidth().clip(shape)
-            .background(Brush.linearGradient(listOf(Brand.Emerald, Brand.EmeraldDeep)))
+            .background(Brush.linearGradient(gradient))
+            .then(if (p.dark) Modifier.border(1.dp, p.cardBorder, shape) else Modifier)
             .padding(20.dp),
     ) {
         Column {
@@ -319,8 +323,8 @@ private fun BrandCard(projectCount: Int, recordCount: Int) {
                 ) { Icon(LedgerIcons.Book, null, tint = Color.White, modifier = Modifier.size(24.dp)) }
                 Spacer(Modifier.width(12.dp))
                 Text("账本", color = Color.White, style = MaterialTheme.typography.titleLarge, modifier = Modifier.weight(1f))
-                Box(Modifier.clip(CircleShape).background(Brand.Gold).padding(horizontal = 10.dp, vertical = 3.dp)) {
-                    Text("本地", color = Color(0xFF3A2A00), fontSize = 12.sp, fontWeight = FontWeight.Bold)
+                Box(Modifier.clip(CircleShape).background(Color.White).padding(horizontal = 10.dp, vertical = 3.dp)) {
+                    Text("本地", color = Color(0xFF111111), fontSize = 12.sp, fontWeight = FontWeight.Bold)
                 }
             }
             Spacer(Modifier.height(20.dp))
@@ -342,13 +346,12 @@ private fun BrandStat(label: String, value: Int, modifier: Modifier) {
 
 @Composable
 private fun GuideStep(n: Int, text: String) {
-    val p = LocalLedger.current
     Row(verticalAlignment = Alignment.Top) {
         Box(
-            Modifier.size(24.dp).clip(CircleShape).background(p.gold.copy(alpha = if (p.dark) 0.24f else 0.2f)),
+            Modifier.size(24.dp).clip(CircleShape).background(MaterialTheme.colorScheme.primary),
             contentAlignment = Alignment.Center,
         ) {
-            Text(n.toString(), color = if (p.dark) p.gold else Color(0xFF8A6111), fontSize = 13.sp, fontWeight = FontWeight.Bold)
+            Text(n.toString(), color = MaterialTheme.colorScheme.onPrimary, fontSize = 13.sp, fontWeight = FontWeight.Bold)
         }
         Spacer(Modifier.width(12.dp))
         Text(text, style = MaterialTheme.typography.bodyMedium, color = MaterialTheme.colorScheme.onSurface, modifier = Modifier.padding(top = 2.dp))

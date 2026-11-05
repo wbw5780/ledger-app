@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="brand_emerald">#FF0E7C5A</color>
-    <color name="brand_emerald_deep">#FF0A5C43</color>
-    <color name="bg_light">#FFF6F7F4</color>
-    <color name="bg_dark">#FF101413</color>
+    <!-- 黑白灰单色系 -->
+    <color name="brand_ink">#FF111111</color>
+    <color name="brand_paper">#FFF5F5F5</color>
+    <color name="bg_light">#FFF4F4F4</color>
+    <color name="bg_dark">#FF0B0B0B</color>
 </resources>

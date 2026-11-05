@@ -13,8 +13,8 @@ android {
         applicationId = "com.ledger.app"
         minSdk = 26
         targetSdk = 35
-        versionCode = 4
-        versionName = "1.3"
+        versionCode = 5
+        versionName = "1.4"
     }
 
     // 签名 keystore 只保存在构建服务器上，不入公开仓库；克隆的源码没有它时 release 不签名

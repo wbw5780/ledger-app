@@ -153,7 +153,7 @@ fun ImportPreviewScreen(db: AppDatabase, nav: Navigator, screen: Screen.ImportPr
                             modifier = Modifier.weight(1f),
                         )
                         Spacer(Modifier.width(8.dp))
-                        GoldBadge(sourceName + if (screen.result.encoding == PdfBillParser.ENCODING_LABEL) " PDF" else " CSV")
+                        CountBadge(sourceName + if (screen.result.encoding == PdfBillParser.ENCODING_LABEL) " PDF" else " CSV")
                     }
                     Spacer(Modifier.height(4.dp))
                     Text(
@@ -240,7 +240,7 @@ private fun MiniStat(label: String, cents: Long, color: Color, modifier: Modifie
     }
 }
 
-/** 圆形勾选标记：选中品牌绿底白勾 */
+/** 圆形勾选标记：选中主色底（浅色黑底白勾 / 深色白底黑勾） */
 @Composable
 private fun CheckMark(on: Boolean) {
     val cs = MaterialTheme.colorScheme
